@@ -29,9 +29,9 @@ const Map = dynamic(() => import('@/components/GoogleMap'), { ssr: false });
 // ❌ page.tsx에 LoadScript/Map 직접 중복
 ```
 
-## 대한민국 범위
+## 대한민국 범위·줌 (네이버 국내 서비스 유사)
 
-`lib/map/korea-bounds.ts` — `restriction.latLngBounds`, `minZoom: 4`(전국), 기본 `DEFAULT_MAP_CENTER` + `DEFAULT_MAP_ZOOM: 9`(서울·경기).
+`lib/map/korea-bounds.ts` — `minZoom: 4`(네이버 대비 2단계 추가 줌아웃), `maxZoom: 21`, `strictBounds: true`, `isFractionalZoomEnabled: false`, 기본 zoom `10`(수도권).
 
 ## 추가 기능 시
 

@@ -9,6 +9,7 @@ import {
   KOREA_MAP_RESTRICTION,
   KOREA_MAX_ZOOM,
   KOREA_MIN_ZOOM,
+  USE_FRACTIONAL_ZOOM,
 } from '@/lib/map/korea-bounds';
 import type { Spot } from '@/lib/mock/spots';
 
@@ -23,6 +24,8 @@ const mapOptions: google.maps.MapOptions = {
   restriction: KOREA_MAP_RESTRICTION,
   minZoom: KOREA_MIN_ZOOM,
   maxZoom: KOREA_MAX_ZOOM,
+  isFractionalZoomEnabled: USE_FRACTIONAL_ZOOM,
+  gestureHandling: 'greedy',
   styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }],
 };
 

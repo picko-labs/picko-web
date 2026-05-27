@@ -12,7 +12,7 @@ import MapControls from '@/components/map/MapControls';
 import SpotDetailCard from '@/components/map/SpotDetailCard';
 import { MOCK_SPOTS, type Spot } from '@/lib/mock/spots';
 import type { ScopeTab, SidebarNav } from '@/lib/routes';
-import { KOREA_MIN_ZOOM } from '@/lib/map/korea-bounds';
+import { getNextZoomIn, getNextZoomOut } from '@/lib/map/korea-bounds';
 
 const GoogleMapComponent = dynamic(() => import('@/components/GoogleMap'), {
   ssr: false,
@@ -50,12 +50,12 @@ export default function Home() {
 
   const handleZoomIn = () => {
     const z = mapRef.current?.getZoom();
-    if (z != null) mapRef.current?.setZoom(Math.min(z + 1, 18));
+    mapRef.current?.setZoom(getNextZoomIn(z ?? undefined));
   };
 
   const handleZoomOut = () => {
     const z = mapRef.current?.getZoom();
-    if (z != null) mapRef.current?.setZoom(Math.max(z - 1, KOREA_MIN_ZOOM));
+    mapRef.current?.setZoom(getNextZoomOut(z ?? undefined));
   };
 
   return (
