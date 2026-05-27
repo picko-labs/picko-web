@@ -1,0 +1,51 @@
+---
+description: Picko App Router 구조, 프로토타입 매핑, 작업별 컨텍스트 읽기 순서
+alwaysApply: true
+---
+
+# Routing & Context
+
+상세 스펙: `docs/ROUTING.md` · 경로 상수: `lib/routes.ts`
+
+## URL → 파일
+
+| Path | 구현 | 프로토타입 (`K-SPOT Map.html`) |
+|------|------|-------------------------------|
+| `/` | `app/page.tsx` | `MapApp` ~1857, `currentScreen: 'map'` |
+| `/login` | `app/login/page.tsx` | `LoginScreen` ~2551 |
+| `/profile` | `app/profile/page.tsx` | `ProfileScreen` ~2663 |
+
+네비게이션: `import { routes } from '@/lib/routes'` + `next/link` 또는 `useRouter`.
+
+## `/` 지도 — 페이지 vs 오버레이
+
+**별도 라우트 아님** (같은 `app/page.tsx` tree):
+
+| UI | 프로토타입 state | 읽을 곳 |
+|----|------------------|---------|
+| 지도·마커 | `map-view`, markers | `components/GoogleMap.tsx`, MapApp ~1860 |
+| 검색·카테고리 | top bar | `components/SearchBar.tsx`, `.search-bar` CSS |
+| 사이드바 | `sidebar-panel`, `scopeTab`, `sidebarNav` | MapApp ~1903, `sidebarNav ===` grep |
+| 스팟 상세 | `selectedSpot`, `.detail-card` | ~2374 |
+| 스팟 폼 | `showCreateForm`, `editingSpot` | ~2504 |
+
+## 작업별 — 무엇을 먼저 읽을지
+
+1. **라우트/페이지 추가** → `docs/ROUTING.md` → `lib/routes.ts` → `app/<segment>/page.tsx`
+2. **지도 UI** → `app/page.tsx` → `components/GoogleMap.tsx` → skill `picko-design-system` + `K-SPOT Map.html` MapApp 섹션
+3. **로그인/프로필** → 해당 `app/*/page.tsx` → 프로토타입 `LoginScreen` / `ProfileScreen` 함수
+4. **스타일** → rule `design-system.mdc` → `DESIGN_SYSTEM.md`
+5. **지도 API** → rule `map-service-strategy.mdc` → `components/GoogleMap.tsx`
+
+프로토타입 전체 로드 금지 — `rg`로 클래스·함수명 검색 후 해당 라인만 Read.
+
+## 신규 파일 배치
+
+```
+app/<route>/page.tsx     # 페이지만
+components/map/          # 지도 전용 UI
+components/              # 공통 (SearchBar 등)
+lib/mock/                # MOCK_SPOTS
+```
+
+`page.tsx`는 조합만; 로직·UI는 `components/`로 분리.

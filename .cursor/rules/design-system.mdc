@@ -1,0 +1,46 @@
+---
+description: Picko 디자인 시스템 — Tailwind 클래스, 토큰, TDS 원칙 (UI 작업 시)
+globs: "**/*.{tsx,css}"
+alwaysApply: false
+---
+
+# Picko Design System (Rules)
+
+TDS 원칙 + K-Culture 브랜드. 상세 스펙: `DESIGN_SYSTEM.md` · 구현: `app/globals.css`, `tailwind.config.ts` · JS 토큰: `lib/design-tokens.ts`
+
+## 색상
+
+- CTA/트렌딩: `bg-primary`, `text-primary`, hover `bg-primary-dark`
+- 정보/링크: `secondary`, `secondary-tint`
+- 하이라이트: `tertiary`
+- 텍스트: `text-neutral-night` (제목), `text-neutral-dusk` (보조)
+- 배경: `bg-background`, `bg-neutral-cream`
+- 그라데이션: `bg-gradient-primary|secondary|tertiary|neutral`
+
+```tsx
+// ❌ 하드코딩 hex (design-tokens.ts 외)
+<div style={{ color: '#F04040' }} />
+
+// ✅ Tailwind 토큰
+<button className="bg-primary text-white hover:bg-primary-dark" />
+```
+
+## Typography
+
+`text-display` · `text-title` · `text-headline` · `text-body` · `text-caption` · `text-label`
+
+## Spacing & Radius
+
+- 간격: `gap-xs|sm|md|lg|xl|2xl|3xl`, 패딩 `p-lg`, `px-xl` 등 (`tailwind.config.ts` spacing)
+- radius: `rounded-sm|md|lg|xl`
+
+## Shadow & Z-index
+
+- `shadow-sm|md|lg|floating|panel`
+- 레이어: marker 5 · sidebar 20 · toggle 25 · modal 50 · toast 100 (`lib/design-tokens.ts` → `zIndex`)
+
+## 원칙
+
+1. 프로토타입 UI는 `K-SPOT Map.html`과 `DESIGN_SYSTEM.md`에 맞출 것
+2. 새 컴포넌트는 `components/`에, 지도는 `components/Map/` 추상화 (`.cursor/rules/map-service-strategy.mdc`)
+3. UI 구현·프로토타입 변환 시 skill `picko-design-system` 참고

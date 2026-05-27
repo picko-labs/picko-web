@@ -1,0 +1,167 @@
+@import './map-ui.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* K-Culture Official Colors */
+    --primary-dark: #8C1818;
+    --primary: #F04040;
+    --primary-light: #F56E6E;
+    --primary-tint: #FDDEDE;
+    
+    --secondary-dark: #1A3580;
+    --secondary: #4A8FE0;
+    --secondary-light: #7AB0EE;
+    --secondary-tint: #D6E8FA;
+    
+    --tertiary-dark: #965800;
+    --tertiary: #F5B820;
+    --tertiary-light: #F8CE60;
+    --tertiary-tint: #FEF3D6;
+    
+    --neutral-night: #111318;
+    --neutral-dusk: #4A4D55;
+    --neutral-paper: #E8E6E1;
+    --neutral-cream: #F7F5F2;
+    
+    --background: #ffffff;
+    --foreground: var(--neutral-night);
+    
+    --card: #ffffff;
+    --card-foreground: var(--neutral-night);
+    
+    --popover: #ffffff;
+    --popover-foreground: var(--neutral-night);
+    
+    --muted: var(--neutral-cream);
+    --muted-foreground: var(--neutral-dusk);
+    
+    --accent: var(--neutral-cream);
+    --accent-foreground: var(--neutral-night);
+    
+    --destructive: var(--primary);
+    --destructive-foreground: #ffffff;
+    
+    --border: var(--neutral-paper);
+    --input: var(--neutral-paper);
+    --ring: var(--primary);
+    
+    --radius: 12px;
+
+    /* Prototype aliases (K-SPOT Map.html) */
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--neutral-cream);
+    --text-primary: var(--neutral-night);
+    --text-secondary: var(--neutral-dusk);
+    --text-tertiary: var(--neutral-dusk);
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+  
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-neutral-cream text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html,
+  body {
+    overflow: hidden;
+    height: 100%;
+  }
+}
+
+@layer utilities {
+  /* Typography utilities matching Picko design system */
+  .text-label {
+    @apply text-[11px] leading-[1.4] font-medium;
+  }
+  
+  .text-caption {
+    @apply text-[13px] leading-[1.4] font-medium;
+  }
+  
+  .text-body {
+    @apply text-[15px] leading-[1.5] font-normal;
+  }
+  
+  .text-headline {
+    @apply text-[17px] leading-[1.4] font-semibold;
+  }
+  
+  .text-title {
+    @apply text-[22px] leading-[1.3] font-semibold;
+  }
+  
+  .text-display {
+    @apply text-[28px] leading-[1.2] font-semibold;
+  }
+  
+  /* Spacing utilities */
+  .space-xs {
+    @apply gap-[4px];
+  }
+  
+  .space-sm {
+    @apply gap-[8px];
+  }
+  
+  .space-md {
+    @apply gap-[12px];
+  }
+  
+  .space-lg {
+    @apply gap-[16px];
+  }
+  
+  .space-xl {
+    @apply gap-[20px];
+  }
+  
+  /* Shadow utilities */
+  .shadow-floating {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  
+  .shadow-card {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  
+  .shadow-panel {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  
+  /* Brand gradient backgrounds */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #F56E6E 0%, #F04040 60%, #8C1818 100%);
+  }
+  
+  .bg-gradient-secondary {
+    background: linear-gradient(135deg, #7AB0EE 0%, #4A8FE0 60%, #1A3580 100%);
+  }
+  
+  .bg-gradient-tertiary {
+    background: linear-gradient(135deg, #F8CE60 0%, #F5B820 60%, #965800 100%);
+  }
+  
+  .bg-gradient-neutral {
+    background: linear-gradient(135deg, #E8E6E1 0%, #6b7684 60%, #111318 100%);
+  }
+}

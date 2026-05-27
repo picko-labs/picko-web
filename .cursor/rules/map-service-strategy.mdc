@@ -1,0 +1,42 @@
+---
+description: Picko 지도 — Google Maps JavaScript API (단일 프로바이더)
+alwaysApply: true
+---
+
+# 지도: Google Maps
+
+**Google Maps JavaScript API**만 사용합니다. 프로바이더 추상화·Kakao 이중 구현은 하지 않습니다.
+
+## 환경 변수
+
+```bash
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_key
+```
+
+[Google Cloud Console](https://console.cloud.google.com/google/maps-apis/credentials)에서 키 발급 후 **Maps JavaScript API** 활성화.
+
+## 구현
+
+| 파일 | 역할 |
+|------|------|
+| `components/GoogleMap.tsx` | 지도 + 마커 (`@react-google-maps/api`) |
+| `app/page.tsx` | dynamic import, `ssr: false` |
+
+```tsx
+// ✅ 지도 UI는 GoogleMap 컴포넌트로
+const Map = dynamic(() => import('@/components/GoogleMap'), { ssr: false });
+
+// ❌ page.tsx에 LoadScript/Map 직접 중복
+```
+
+## 대한민국 범위
+
+`lib/map/korea-bounds.ts` — `restriction.latLngBounds`, `minZoom: 4`(전국), 기본 `DEFAULT_MAP_CENTER` + `DEFAULT_MAP_ZOOM: 9`(서울·경기).
+
+## 추가 기능 시
+
+길찾기·Places 등은 Google Maps Platform API를 그대로 확장.
+
+## 참고
+
+- [Maps JavaScript API](https://developers.google.com/maps/documentation/javascript)
