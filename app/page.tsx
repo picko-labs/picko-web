@@ -29,7 +29,6 @@ export default function Home() {
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [myLocation, setMyLocation] = useState(false);
   const [scopeTab, setScopeTab] = useState<ScopeTab>('nearby');
   const [sidebarNav, setSidebarNav] = useState<SidebarNav>('info');
   const [activeTrending, setActiveTrending] = useState('hot');
@@ -82,7 +81,8 @@ export default function Home() {
           type="button"
           className={`sidebar-toggle ${sidebarCollapsed ? 'collapsed' : ''}`}
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-          title={sidebarCollapsed ? 'Open panel' : 'Close panel'}
+          title={sidebarCollapsed ? 'Open search & panel' : 'Close search & panel'}
+          aria-label={sidebarCollapsed ? 'Open search and panel' : 'Close search and panel'}
         >
           <span className="toggle-chevron">
             {sidebarCollapsed ? (
@@ -98,6 +98,8 @@ export default function Home() {
         </button>
 
         <MapTopBar
+          collapsed={sidebarCollapsed}
+          onExpand={() => setSidebarCollapsed(false)}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           activeTrending={activeTrending}
@@ -106,8 +108,6 @@ export default function Home() {
 
         <MapControls
           sidebarCollapsed={sidebarCollapsed}
-          myLocation={myLocation}
-          onMyLocationToggle={() => setMyLocation(!myLocation)}
           onZoomIn={handleZoomIn}
           onZoomOut={handleZoomOut}
         />
