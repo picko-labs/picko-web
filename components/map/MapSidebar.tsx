@@ -1,7 +1,7 @@
 'use client';
 
 import type { Spot } from '@/lib/mock/spots';
-import type { ScopeTab, SidebarNav } from '@/lib/routes';
+import { isSidebarNavVisible, type ScopeTab, type SidebarNav } from '@/lib/routes';
 
 const SIDEBAR_NAV = [
   { id: 'info' as const, icon: '🗺️', label: 'Info' },
@@ -103,7 +103,7 @@ export default function MapSidebar({
         </div>
 
         <div className="sidebar-bottom-nav">
-          {SIDEBAR_NAV.map((nav) => (
+          {SIDEBAR_NAV.filter((nav) => isSidebarNavVisible(nav.id)).map((nav) => (
             <button
               key={nav.id}
               type="button"
