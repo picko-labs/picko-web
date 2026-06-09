@@ -1,7 +1,3 @@
----
-description: App Router 구조, 프로토타입 매핑, 작업별 읽기 순서
-alwaysApply: true
----
 <!-- generated router · edit docs/ROUTING.md + docs/agent/manifest.json · npm run sync:agent -->
 
 # 라우팅 & 컨텍스트

@@ -1,0 +1,68 @@
+{
+  "rules": {
+    "git-convention": {
+      "title": "Git 컨벤션",
+      "doc": "docs/git-convention.md",
+      "description": "브랜치·커밋·PR 규칙 (한국어). 커밋/PR/브랜치 작업 시.",
+      "alwaysApply": false,
+      "summary": [
+        "`<type>: ` + 한국어 제목 ≤50자, 마침표 없음",
+        "Co-Authored-By 등 트레일러 금지",
+        "절차: `docs/agent/commit-draft.md`"
+      ]
+    },
+    "routing": {
+      "title": "라우팅 & 컨텍스트",
+      "doc": "docs/ROUTING.md",
+      "description": "App Router 구조, 프로토타입 매핑, 작업별 읽기 순서",
+      "alwaysApply": true,
+      "summary": [
+        "경로 상수: `lib/routes.ts`",
+        "page = 조합만, UI = `components/features/`",
+        "프로토타입 전체 로드 금지 — `rg` 후 해당 구간만 Read"
+      ]
+    },
+    "localization": {
+      "title": "로컬라이제이션 (UI copy)",
+      "doc": "docs/LANGUAGE.md",
+      "description": "제품 UI는 English. 잘파 / 한국 방문 20s–30s 톤.",
+      "globs": "\"**/*.{tsx,ts}\"",
+      "alwaysApply": true,
+      "summary": [
+        "사용자 노출 문자열: English only",
+        "커밋·PR·팀 docs: 한국어",
+        "문자열 추가: `lib/i18n/en/`"
+      ]
+    },
+    "design-system": {
+      "title": "디자인 시스템",
+      "doc": "docs/design-system-rules.md",
+      "description": "Tailwind·토큰·TDS. UI 작업 시.",
+      "globs": "\"**/*.{tsx,css}\"",
+      "alwaysApply": false,
+      "summary": [
+        "전체: `DESIGN_SYSTEM.md`",
+        "Tailwind 토큰 우선, hex 하드코딩 금지",
+        "skill: `.cursor/skills/picko-design-system/`"
+      ]
+    },
+    "map-service-strategy": {
+      "title": "지도: Google Maps",
+      "doc": "docs/map-service-strategy.md",
+      "description": "Google Maps JavaScript API 단일 프로바이더",
+      "alwaysApply": true,
+      "summary": [
+        "Google Maps only — Kakao 이중 구현 없음",
+        "`components/features/map/GoogleMap.tsx`",
+        "bounds: `lib/map/korea-bounds.ts`"
+      ]
+    }
+  },
+  "commands": {
+    "commit-draft": {
+      "name": "commit-draft",
+      "doc": "docs/agent/commit-draft.md",
+      "description": "변경 분석 → docs/git-convention.md 기반 커밋 초안.\n\n호출: \"커밋 메시지\", \"커밋 초안\", \"/commit-draft\", \"commit 해줘\".\n\n필수: Co-Authored-By 금지 · 제목 ≤50자 한국어 · type 접두."
+    }
+  }
+}

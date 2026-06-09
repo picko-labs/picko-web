@@ -1,48 +1,45 @@
 ---
 name: picko-design-system
 description: >-
-  Implements Picko UI using TDS + K-Culture design tokens, Tailwind, and the
-  K-SPOT Map.html prototype. Use when building or styling components, converting
-  prototype screens to Next.js, working with DESIGN_SYSTEM.md, design-tokens.ts,
-  globals.css, or tailwind.config.ts.
+  Picko UI — TDS·K-Culture 토큰, Tailwind, K-SPOT Map.html 프로토타입.
+  컴포넌트·스타일·프로토타입→Next.js 변환 시.
 ---
 
 # Picko Design System Skill
 
-## Source of truth (read as needed)
+## SSoT (필요 시 Read)
 
-| File | Purpose |
-|------|---------|
-| `docs/ROUTING.md` | App Router paths, prototype screen map, overlay state |
-| `lib/routes.ts` | Route path constants |
-| `DESIGN_SYSTEM.md` | Full spec: colors, type, spacing, components |
-| `lib/design-tokens.ts` | Programmatic values (colors, zIndex, gradients) |
-| `app/globals.css` | CSS variables + utility classes |
-| `tailwind.config.ts` | Tailwind theme extension |
-| `K-SPOT Map.html` | Interactive UI prototype (2983 lines) |
+| 파일 | 용도 |
+|------|------|
+| `docs/ROUTING.md` | 라우트, 프로토타입 매핑, overlay state |
+| `lib/routes.ts` | 경로 상수 |
+| `DESIGN_SYSTEM.md` | 색·타입·spacing·컴포넌트 전체 |
+| `lib/design-tokens.ts` | colors, zIndex, gradients |
+| `app/globals.css` | CSS 변수·utility |
+| `tailwind.config.ts` | Tailwind theme |
+| `K-SPOT Map.html` | UI 프로토타입 |
 
-Rule `routing.mdc` defines **which files to read first** per task.
+작업별 읽기 순서: rule `routing` → `docs/ROUTING.md`
 
-## Language (UI copy)
+## UI copy
 
-**English** is the default product language (global users). See [language-reference.md](language-reference.md) · `docs/LANGUAGE.md` · rule `localization.mdc`.
+**English** (제품 기본). [language-reference.md](language-reference.md) · `docs/LANGUAGE.md`
 
-- All buttons, headings, empty states, errors, and auth labels: **English**
-- Code comments / internal docs may be Korean; user-visible strings must not be
-- **Audience:** 잘파 / trend-conscious; **core** = **20s–30s visiting Korea**; breadth **teens–40s**. Voice = short, travel + discovery (**pick**, **spot**, **trending**), friendly **you**—not corporate or heavy slang
+- 버튼·heading·empty state·error·OAuth label: **English**
+- 코드 comment / 내부 docs: 한국어 OK
+- 톤: 잘파, **20s–30s 한국 방문** 코어 — **pick**, **spot**, **trending**, 친근한 **you**
 
-## Quick workflow
+## 워크플로
 
-1. **Route** — Page vs overlay: [routing-reference.md](routing-reference.md) · `docs/ROUTING.md`
-2. **Scope** — Identify screen/section in `K-SPOT Map.html` (see [prototype-reference.md](prototype-reference.md))
-2. **Tokens** — Use Tailwind classes first; import `@/lib/design-tokens` only for inline styles, canvas, or map logic
-3. **Implement** — `components/*.tsx` + existing `app/page.tsx` patterns
-4. **Verify** — Match spacing, typography utilities, brand colors from `DESIGN_SYSTEM.md`
+1. **Route** — page vs overlay: [routing-reference.md](routing-reference.md)
+2. **Scope** — 프로토타입 구간: [prototype-reference.md](prototype-reference.md)
+3. **Tokens** — Tailwind 우선; inline/canvas/map만 `@/lib/design-tokens`
+4. **Implement** — `components/features/` 패턴 따르기
+5. **Verify** — `DESIGN_SYSTEM.md` spacing·color 일치
 
-## Tailwind patterns
+## Tailwind 예시
 
 ```tsx
-// Card
 <div className="bg-white rounded-lg shadow-md overflow-hidden">
   <div className="aspect-square bg-gradient-primary" />
   <div className="p-lg">
@@ -51,44 +48,27 @@ Rule `routing.mdc` defines **which files to read first** per task.
   </div>
 </div>
 
-// Active chip
 <button className="px-lg py-sm bg-primary text-white rounded-xl text-caption font-semibold shadow-sm">
   🔥 Hot Place
 </button>
 ```
 
-## Programmatic tokens
+## 프로토타입 → React
 
-```typescript
-import { colors, zIndex, gradients } from '@/lib/design-tokens';
+1. CSS class grep (`sidebar-panel`, `category-chip` …)
+2. Tailwind + Picko utility로 변환 ([prototype-reference.md](prototype-reference.md))
+3. mock data → `lib/mock/` 등
+4. `components/features/` 로 분리
 
-// Map overlay z-index
-style={{ zIndex: zIndex.sidebar }}
+inline `<style>` 통째 복사 ❌ — Tailwind로 번역.
 
-// Dynamic gradient in JS
-background: gradients.primary
-```
+## 지도
 
-## Prototype → React
+`docs/map-service-strategy.md` · `components/features/map/GoogleMap.tsx`
 
-When porting from `K-SPOT Map.html`:
+## 참고
 
-1. Grep CSS class name (e.g. `sidebar-panel`, `category-chip`)
-2. Map to Tailwind + Picko utilities (see [prototype-reference.md](prototype-reference.md))
-3. Extract static data to `lib/` or colocated constants
-4. Split into `components/` (SearchBar, Sidebar, Map markers, etc.)
-
-Do **not** copy inline `<style>` blocks wholesale — translate to Tailwind.
-
-## Map UI
-
-Map: Google Maps — `.cursor/rules/map-service-strategy.mdc`
-
-Current: `components/GoogleMap.tsx`, `components/SearchBar.tsx`.
-
-## Additional resources
-
-- [language-reference.md](language-reference.md) — English UI copy policy & patterns
-- [routing-reference.md](routing-reference.md) — routes, prototype screens, overlays
-- [prototype-reference.md](prototype-reference.md) — K-SPOT Map.html component map
-- [tokens-reference.md](tokens-reference.md) — design-tokens.ts quick reference
+- [language-reference.md](language-reference.md) — UI copy
+- [routing-reference.md](routing-reference.md) — 라우트·overlay
+- [prototype-reference.md](prototype-reference.md) — 프로토타입 맵
+- [tokens-reference.md](tokens-reference.md) — design-tokens.ts

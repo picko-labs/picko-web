@@ -1,8 +1,3 @@
----
-description: Tailwind·토큰·TDS. UI 작업 시.
-globs: "**/*.{tsx,css}"
-alwaysApply: false
----
 <!-- generated router · edit docs/design-system-rules.md + docs/agent/manifest.json · npm run sync:agent -->
 
 # 디자인 시스템

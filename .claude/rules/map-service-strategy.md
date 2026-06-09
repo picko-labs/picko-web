@@ -1,7 +1,3 @@
----
-description: Google Maps JavaScript API 단일 프로바이더
-alwaysApply: true
----
 <!-- generated router · edit docs/map-service-strategy.md + docs/agent/manifest.json · npm run sync:agent -->
 
 # 지도: Google Maps

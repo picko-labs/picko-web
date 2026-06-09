@@ -1,10 +1,10 @@
-# Routing Reference
+# Routing reference
 
-Full spec: [docs/ROUTING.md](../../../docs/ROUTING.md)
+전체: [docs/ROUTING.md](../../../docs/ROUTING.md)
 
-**UI copy:** English · 잘파 / Korea 20s–30s voice — [language-reference.md](language-reference.md)
+**UI copy:** English — [language-reference.md](language-reference.md)
 
-## Route constants
+## 경로 상수
 
 ```typescript
 import { routes } from '@/lib/routes';
@@ -13,42 +13,37 @@ import Link from 'next/link';
 <Link href={routes.login}>Sign in</Link>
 ```
 
-## Prototype screen map
+## 프로토타입 → Next.js
 
-| `currentScreen` (prototype) | Next.js |
-|-----------------------------|---------|
+| `currentScreen` | Path |
+|-----------------|------|
 | `map` | `/` |
 | `login` | `/login` |
 | `profile` | `/profile` |
 
-Transition examples in prototype:
-- Login success: `setTweak({ isLoggedIn: true, currentScreen: 'map' })` → `router.push(routes.map)`
-- Sign in CTA: `setTweak('currentScreen', 'login')` → `router.push(routes.login)`
-- Profile back: `setTweak('currentScreen', 'map')` → `router.push(routes.map)`
+전환 예: login 성공 → `router.push(routes.map)` · sign in CTA → `routes.login`
 
-## Map page: sidebarNav panels
+## Map page — sidebarNav
 
-| `sidebarNav` | Prototype line hint | Content |
-|--------------|---------------------|---------|
-| `info` | ~1936 / ~1964 | Trending nearby / nationwide |
-| `pick` | ~2109 | Empty picks state |
-| `lifestyle` | ~2153 | Lifestyle grid cards |
-| `my` | ~2177 | Account, sign in, settings |
+| `sidebarNav` | 프로토타입 | 내용 |
+|--------------|------------|------|
+| `info` | ~1936 | Trending nearby / nationwide |
+| `pick` | ~2109 | Empty picks |
+| `lifestyle` | ~2153 | Lifestyle grid |
+| `my` | ~2177 | Account, sign in |
 
-## Map page: overlays (not routes)
+## Overlay (라우트 아님)
 
-| State | Component (planned) | Prototype |
-|-------|---------------------|-----------|
-| `selectedSpot` | `SpotDetail.tsx` | `.detail-card` ~2374 |
-| `showCreateForm` | `SpotForm.tsx` | ~2504 |
-| `editingSpot` | `SpotForm.tsx` | ~2504 |
+| State | 컴포넌트 | 프로토타입 |
+|-------|----------|------------|
+| `selectedSpot` | `SpotDetailCard.tsx` | `.detail-card` ~2374 |
+| `showCreateForm` | (예정) `SpotForm.tsx` | ~2504 |
+| `editingSpot` | (예정) `SpotForm.tsx` | ~2504 |
 
-## Implementation checklist
+## 포팅 체크리스트
 
-Porting a prototype section:
-
-- [ ] Confirm URL vs overlay (table above)
-- [ ] Read prototype function/block only (grep + offset Read)
-- [ ] Match `design-system.mdc` Tailwind tokens
-- [ ] Place file under `app/` or `components/map/`
-- [ ] Update `docs/ROUTING.md` if routes change
+- [ ] URL vs overlay 구분
+- [ ] 프로토타입 해당 구간만 Read (`rg` + offset)
+- [ ] `docs/design-system-rules.md` 토큰 일치
+- [ ] `app/` 또는 `components/features/<domain>/`
+- [ ] 라우트 변경 시 `docs/ROUTING.md` 갱신
