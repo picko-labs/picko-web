@@ -1,0 +1,16 @@
+---
+description: KISS·DRY·YAGNI·추상화. 구현·리팩터·리뷰 시.
+alwaysApply: true
+---
+<!-- generated router · edit docs/development-principles.md + docs/agent/manifest.json · npm run sync:agent -->
+
+# 코드 설계 원칙
+
+> **필독:** `docs/development-principles.md`
+
+## 요약
+
+- KISS — 단순한 해법 우선, 복잡성은 필요할 때만
+- DRY — 진짜 중복만 추출, 우연의 일치는 보류
+- YAGNI — 현재 요구 없는 확장·추상화 금지
+- 추상화 — 실질적 이득 > 복잡도 비용일 때만
