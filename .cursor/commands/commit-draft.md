@@ -1,11 +1,11 @@
 ---
 name: commit-draft
 description: |
-  변경 분석 → docs/git-convention.md 기반 커밋 초안.
+  Git 전체 워크플로: 브랜치 → 커밋 제안 → 사람 확인 → 커밋 → PR 생성 → 사람 병합.
   
   호출: "커밋 메시지", "커밋 초안", "/commit-draft", "commit 해줘".
   
-  필수: Co-Authored-By 금지 · 제목 ≤50자 한국어 · type 접두.
+  핵심: 사용자 명시 확인 전 git 명령 실행 절대 금지.
 ---
 
 <!-- generated router · edit docs/agent/commit-draft.md + docs/agent/manifest.json · npm run sync:agent -->
