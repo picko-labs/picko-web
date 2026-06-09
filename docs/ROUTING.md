@@ -2,6 +2,8 @@
 
 Next.js App Router 구조. 프로토타입 `K-SPOT Map.html`의 `currentScreen` / 사이드바 상태와 매핑.
 
+**UI copy:** English — `docs/LANGUAGE.md`
+
 ## URL 라우트 (페이지)
 
 | Path | 파일 | 프로토타입 | 설명 |
@@ -10,10 +12,12 @@ Next.js App Router 구조. 프로토타입 `K-SPOT Map.html`의 `currentScreen` 
 | `/login` | `app/login/page.tsx` | `LoginScreen` (~2551) | 로그인 |
 | `/profile` | `app/profile/page.tsx` | `ProfileScreen` (~2663) | 프로필·내 스팟 |
 
-### 인증 가드 (계획)
+### 인증
 
-- `/profile` — `isLoggedIn` 없으면 `/login?redirect=/profile`
-- 로그인 성공 → `redirect` 또는 `/`
+- 상세: `docs/AUTH.md`
+- `/profile` — 미로그인 시 `middleware` → `/login?redirect=/profile`
+- My 탭·`/login` — Google 소셜 로그인 (Apple은 레지스트리만 준비)
+- 로그인 성공 → `redirect` 쿼리 또는 `/`
 
 ## 지도 페이지 UI 상태 (URL 아님 → 추후 searchParams)
 

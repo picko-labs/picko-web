@@ -560,3 +560,164 @@
   background: rgba(240, 64, 64, 0.1);
   color: var(--primary, #f04040);
 }
+
+/* My 탭 · 소셜 로그인 */
+.social-login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md, 12px);
+  width: 100%;
+}
+
+.social-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md, 12px);
+  width: 100%;
+  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
+  border-radius: var(--radius-md, 12px);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  border: 1px solid var(--neutral-paper, #e8e6e1);
+  background: var(--bg-primary, #fff);
+  color: var(--text-primary, #111318);
+}
+
+.social-login-btn:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.social-login-btn--apple {
+  background: var(--neutral-night, #111318);
+  color: #fff;
+  border-color: var(--neutral-night, #111318);
+}
+
+.my-tab-panel {
+  padding: var(--spacing-xl, 20px) var(--spacing-lg, 16px);
+}
+
+.my-tab-panel--guest {
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.my-tab-emoji {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.my-tab-title {
+  font-weight: 600;
+  font-size: 17px;
+  margin-top: var(--spacing-lg, 16px);
+  color: var(--text-primary, #111318);
+}
+
+.my-tab-desc {
+  color: var(--text-secondary, #4a4d55);
+  font-size: 15px;
+  margin-top: var(--spacing-sm, 8px);
+  line-height: 1.5;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-tab-login {
+  margin-top: var(--spacing-xl, 20px);
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.my-tab-footnote {
+  margin-top: var(--spacing-lg, 16px);
+  font-size: 13px;
+  color: var(--text-secondary, #4a4d55);
+}
+
+.my-tab-muted {
+  text-align: center;
+  color: var(--text-secondary, #4a4d55);
+  font-size: 15px;
+  padding: 48px 24px;
+}
+
+.my-tab-profile {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg, 16px);
+  margin-bottom: var(--spacing-xl, 20px);
+}
+
+.my-tab-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.my-tab-avatar--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--neutral-cream, #f7f5f2);
+  font-size: 28px;
+}
+
+.my-tab-name {
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--text-primary, #111318);
+}
+
+.my-tab-email {
+  font-size: 14px;
+  color: var(--text-secondary, #4a4d55);
+  margin-top: 4px;
+}
+
+.my-tab-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm, 8px);
+}
+
+.my-tab-menu-item {
+  display: block;
+  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
+  background: var(--bg-primary, #fff);
+  border-radius: var(--radius-md, 12px);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary, #111318);
+  text-decoration: none;
+  border: 1px solid var(--neutral-paper, #e8e6e1);
+}
+
+.my-tab-menu-item:hover {
+  border-color: var(--primary, #f04040);
+  color: var(--primary, #f04040);
+}
+
+.my-tab-signout {
+  margin-top: var(--spacing-xl, 20px);
+  width: 100%;
+  padding: var(--spacing-md, 12px);
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  color: var(--text-secondary, #4a4d55);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.my-tab-signout:hover {
+  color: var(--primary, #f04040);
+}

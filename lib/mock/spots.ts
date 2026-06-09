@@ -2,20 +2,8 @@
  * Mock spots from K-SPOT Map.html MOCK_SPOTS
  */
 
-export type Spot = {
-  id: number;
-  name: string;
-  category: string;
-  location: string;
-  address: string;
-  pins: number;
-  trending: boolean;
-  pinned: boolean;
-  image: string;
-  lat: number;
-  lng: number;
-  description: string;
-};
+export type { Spot } from "@/lib/types/spot";
+import type { Spot } from "@/lib/types/spot";
 
 export const TRENDING_CATEGORIES = [
   { id: 'hot', label: 'Hot Place', icon: '🔥' },

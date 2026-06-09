@@ -7,6 +7,8 @@ alwaysApply: true
 
 상세 스펙: `docs/ROUTING.md` · 경로 상수: `lib/routes.ts`
 
+**UI copy:** English · 잘파 / Korea visitors 20s–30s tone — `localization.mdc` · `docs/LANGUAGE.md`
+
 ## URL → 파일
 
 | Path | 구현 | 프로토타입 (`K-SPOT Map.html`) |
@@ -42,10 +44,14 @@ alwaysApply: true
 ## 신규 파일 배치
 
 ```
-app/<route>/page.tsx     # 페이지만
-components/map/          # 지도 전용 UI
-components/              # 공통 (SearchBar 등)
-lib/mock/                # MOCK_SPOTS
+app/<route>/page.tsx              # 페이지 조합만
+components/features/<domain>/     # 기능 UI (auth, map, profile, …)
+components/providers/             # AppProviders 등
+lib/api/                          # REST·HTTP (React 없음) — 백엔드 연동 시 확장
+lib/queries/                      # React Query hooks — 백엔드 연동 시 확장
+lib/types/                        # 도메인 타입
+lib/i18n/en/                      # UI copy (English, i18n 준비)
+lib/mock/                         # MOCK_SPOTS 등
 ```
 
-`page.tsx`는 조합만; 로직·UI는 `components/`로 분리.
+`page.tsx`는 조합만; 로직·UI는 `components/features/`로 분리.
