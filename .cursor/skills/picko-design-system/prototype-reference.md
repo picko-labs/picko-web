@@ -1,75 +1,62 @@
-# K-SPOT Map.html — Prototype Reference
+# K-SPOT Map.html — 프로토타입 reference
 
-**Source of truth:** `picko-api/K-SPOT Map.html` (also copied at repo root).
+**SSoT:** `picko-api/K-SPOT Map.html` (repo root 복사본도 있음)
 
-Single-file React prototype. Read targeted sections; do not load entire file unless necessary.
+단일 파일 React 프로토타입. **전체 로드 금지** — `rg` 후 해당 구간만 Read.
 
-**Implemented styles:** `app/map-ui.css` (ported from prototype `<style>` block).
+**스타일 이전:** `app/map-ui.css`
 
-## How to navigate
+## 탐색
 
 ```bash
-# Find a UI block
 rg "sidebar-panel|search-bar|category-chip|marker" K-SPOT\ Map.html
-
-# Find React components
 rg "function .*Screen|function App" K-SPOT\ Map.html
 ```
 
-## Layout architecture
+## 레이아웃
 
 ```
-map-container (full viewport)
-├── map-view (map + markers)
-├── sidebar-panel (400px, collapsible, z-20)
+map-container
+├── map-view (markers)
+├── sidebar-panel (400px, z-20)
 │   ├── scope-tabs (Near you / Nationwide)
-│   ├── sidebar-scroll (ranked cards, region grid)
+│   ├── sidebar-scroll
 │   └── sidebar-bottom-nav
 ├── sidebar-toggle (z-25)
-├── top-bar (search + category chips, above map)
-└── map-controls (zoom, locate)
+├── top-bar (search + chips)
+└── map-controls
 ```
 
-## CSS class → Tailwind mapping
+## CSS class → Tailwind
 
-| Prototype class | Picko implementation |
-|-----------------|------------------------|
-| `.search-bar` | `SearchBar.tsx` — white card, `rounded-md`, `shadow-md`, flex gap |
-| `.category-chip` | `rounded-xl`, `text-caption`, `font-semibold`, active: `bg-primary text-white` |
-| `.sidebar-panel` | `w-[400px]`, `rounded-lg`, `shadow-panel`, absolute left |
-| `.scope-tab.active` | segmented control on `bg-neutral-cream` |
-| `.ranked-card` | aspect image + overlay + rank badge |
-| `.marker` / `.marker-pin` | Google Maps `Marker` (custom icon optional) |
-| `.region-squircle` | nationwide region grid cards |
+| Prototype | Picko |
+|-----------|-------|
+| `.search-bar` | `MapTopBar.tsx` — white, `rounded-md`, `shadow-md` |
+| `.category-chip` | active: `bg-primary text-white` |
+| `.sidebar-panel` | `w-[400px]`, `shadow-panel` |
+| `.scope-tab.active` | `bg-neutral-cream` segmented |
+| `.ranked-card` | aspect image + rank badge |
+| `.marker` | Google Maps `Marker` |
+| `.region-squircle` | nationwide grid |
 
-## CSS variables (prototype :root)
+CSS 변수(`--primary` …) → `globals.css` + `tailwind.config.ts`
 
-Prototype uses `--primary`, `--spacing-lg`, `--font-size-body`, etc.  
-Next.js equivalents are in `app/globals.css` (`:root`) and `tailwind.config.ts`.
+## 주요 함수
 
-## Key screens (JS functions)
+| Function | 용도 |
+|----------|------|
+| `App` | map + sidebar shell |
+| `LoginScreen` | auth UI |
+| `ProfileScreen` | profile |
 
-| Function | Purpose |
-|----------|---------|
-| `App` | Main map + sidebar shell |
-| `LoginScreen` | Auth UI |
-| `ProfileScreen` | User profile |
-| Spot detail overlays | Modal / bottom sheet patterns |
+## 데이터
 
-## Data patterns in prototype
+- `spots`: id, name, location, category, trending, image
+- `REGIONS`: nationwide tab
+- filter: `scopeTab`, category chips
 
-- `spots` array: id, name, location, category, trending, image (gradient string)
-- `REGIONS` for nationwide tab
-- Filter by `scopeTab` (nearby / nationwide) and category chips
+mock → `lib/mock/spots.ts` (추후 API)
 
-When porting, move mock data to `lib/mock/spots.ts` or fetch from API later.
+## Z-index
 
-## Z-index (match design-tokens)
-
-| Layer | Value |
-|-------|-------|
-| marker | 5 |
-| sidebar | 20 |
-| sidebar-toggle | 25 |
-| modal | 50 |
-| toast | 100 |
+marker 5 · sidebar 20 · toggle 25 · modal 50 · toast 100

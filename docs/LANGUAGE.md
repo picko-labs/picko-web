@@ -1,72 +1,54 @@
-# Language & copy
+# 언어 & UI copy
 
-## Product default
+## 기본
 
-| Audience | UI language |
-|----------|-------------|
-| Global users (primary) | **English** |
-| Team / docs | Korean OK for internal notes; UI specs still say English |
+| 대상 | 언어 |
+|------|------|
+| 제품 UI (사용자 노출) | **English** |
+| 팀 docs · 커밋 · PR | **한국어** |
 
-Picko is Korean-built but global-first. Every user-visible string in the app should be English unless we ship explicit localization.
+한국에서 만들지만 **글로벌 사용자** 대상. i18n 전까지 앱 문자열은 English.
 
-## Who we write for
+## 타깃 & 톤
 
-| Segment | Role |
-|---------|------|
-| **Core** | **20s–30s** visiting **Korea** — discovery, trends, spots to hit IRL |
-| **Breadth** | **Teens–40s** — same product, tone stays approachable for all |
-| **Mindset** | **잘파 (well-informed / trend-conscious)** — cares what’s hot, authentic, worth the trip; low patience for fluff |
+| | |
+|--|--|
+| **코어** | **20s–30s** 한국 방문 — 트렌드·스팟 discovery |
+| **범위** | teens–40s — 가볍고 친근하게 |
+| **마인드** | **잘파** — 핫하고 진짜 worth it한 곳 |
 
-They use Picko like a **travel + culture compass**, not enterprise software. Copy should feel **current, light, and confident**—helping them find what’s worth picking, not lecturing them.
+**여행 + K-culture 컴패니언** 톤. 짧고, **you** 지향. discovery 단어: **pick**, **spot**, **trending**, **near you**.
 
-## Voice & tone
+| ✅ | ❌ |
+|----|-----|
+| 짧은 한 줄 (sidebar, overlay) | 장문, 법률/엔터프라이즈 톤 |
+| `Save picks`, `Add a spot` | `Submit`, `Proceed`, `utilize` |
+| 버튼 **sentence case** | 전체 대문자 제목 |
 
-| Do | Avoid |
-|----|--------|
-| Short, scannable lines (mobile sidebar, map overlays) | Long paragraphs, legal tone |
-| Friendly, direct **you** | Passive voice, “the user”, “please be advised” |
-| Discovery language: **pick**, **spot**, **trending**, **near you** | Generic SaaS: “utilize”, “dashboard”, “items” |
-| Light energy where the prototype does (emoji chips 🔥) | Stiff formality or heavy Gen-Z slang (“no cap”, “slay”) |
-| Clear CTAs: **Save picks**, **Add a spot** | Vague: **Submit**, **Proceed**, **Learn more** (unless needed) |
+**판단 기준:** 홍대에 온 **26세**가 1초 안에 이해하는가?
 
-**Sentence case** on buttons: `Continue with Google`, `Sign out`.
+## 어휘 (UI chrome)
 
-### Word choice hints
+| 쓸 것 | 피할 것 |
+|--------|---------|
+| pick / spot | favorite, POI, location |
+| trending, hot, near you | proximity-based results |
+| sign in | authenticate, re-authenticate |
 
-- **Pick** (noun/verb) — our brand action; prefer over “favorite” or “bookmark” in product chrome.
-- **Spot** — a place on the map; not “location” or “POI” in UI.
-- **Trending / hot** — fits trend-led discovery; match prototype (`Hot Place`, nationwide 🔥).
-- **Near you** — traveler-friendly; better than “proximity-based results”.
-- **Sign in** — warmer than “Log in” for social OAuth flows (either is OK; stay consistent).
-
-When unsure, ask: *Would a 25-year-old in Seoul for the weekend skim this and get it in one second?*
-
-## Examples
+## 예시
 
 | ✅ | ❌ |
 |----|-----|
 | `Sign in to save your picks` | `로그인이 필요해요` |
 | `Continue with Google` | `Google로 계속하기` |
-| `Back to map` | `지도로 돌아가기` |
 | `Nothing picked yet` | `No records found` |
-| `Trending near you` | `Popular locations in your vicinity` |
 
-## HTML
+## HTML · i18n
 
-```html
-<html lang="en">
-```
+- `lang="en"` (`app/layout.tsx`)
+- 추후: default locale `en`, 키는 `lib/i18n/en/` 등 한곳
 
-## Future i18n
+## 에이전트
 
-Not implemented yet. When added:
-
-- Default locale: `en`
-- User-facing keys in one place (e.g. `lib/i18n/en.ts`)
-- Auth provider labels stay in the social provider registry
-- Tone rules above apply to every locale’s **default** voice guide
-
-## Cursor
-
-- Rule: `.cursor/rules/localization.mdc` (always apply)
+- Rule: `.cursor/rules/localization.mdc` → **본 문서**
 - Skill: `.cursor/skills/picko-design-system/language-reference.md`

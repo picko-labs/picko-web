@@ -6,7 +6,9 @@
     "dev": "next dev --hostname localhost",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sync:agent": "node scripts/sync-agent-mirrors.mjs",
+    "sync:agent:check": "node scripts/sync-agent-mirrors.mjs --check"
   },
   "dependencies": {
     "@react-google-maps/api": "^2.20.8",

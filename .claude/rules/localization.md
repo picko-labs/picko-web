@@ -1,8 +1,3 @@
----
-description: 제품 UI는 English. 잘파 / 한국 방문 20s–30s 톤.
-globs: "**/*.{tsx,ts}"
-alwaysApply: true
----
 <!-- generated router · edit docs/LANGUAGE.md + docs/agent/manifest.json · npm run sync:agent -->
 
 # 로컬라이제이션 (UI copy)
