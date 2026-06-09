@@ -29,6 +29,11 @@ TDS + K-Culture. **전체:** `DESIGN_SYSTEM.md` · **구현:** `globals.css`, `t
 - `shadow-sm|md|lg|floating|panel`
 - z: marker 5 · sidebar 20 · toggle 25 · modal 50 · toast 100
 
+## Tailwind 추가 규칙
+
+- Arbitrary value (`w-[123px]` 등) 최소화 — 디자인 토큰으로 대체 가능하면 토큰 우선
+- Inline style ❌ — Tailwind 또는 `globals.css` utility
+
 ## 원칙
 
 1. UI 근거: `K-SPOT Map.html` + `DESIGN_SYSTEM.md`

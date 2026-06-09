@@ -11,7 +11,7 @@ docs/                    ← 여기만 편집
   git-convention.md
   ROUTING.md · LANGUAGE.md
   map-service-strategy.md · design-system-rules.md
-  development-principles.md
+  development-principles.md · frontend-rules.md
   agent/commit-draft.md · manifest.json
 
 .claude/ · .cursor/      ← npm run sync:agent 로 생성
@@ -32,6 +32,7 @@ docs/                    ← 여기만 편집
 | design-system | `docs/design-system-rules.md` (+ `DESIGN_SYSTEM.md`) |
 | map | `docs/map-service-strategy.md` |
 | development-principles | `docs/development-principles.md` |
+| frontend-rules | `docs/frontend-rules.md` |
 
 라우터 본문 = **필독 안내 + 요약** (전문 복사 없음).
 
