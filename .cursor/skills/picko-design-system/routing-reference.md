@@ -2,6 +2,8 @@
 
 Full spec: [docs/ROUTING.md](../../../docs/ROUTING.md)
 
+**UI copy:** English · 잘파 / Korea 20s–30s voice — [language-reference.md](language-reference.md)
+
 ## Route constants
 
 ```typescript

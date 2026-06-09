@@ -1,6 +1,6 @@
 'use client';
 
-import type { Spot } from '@/lib/mock/spots';
+import type { Spot } from "@/lib/types/spot";
 
 type SpotDetailCardProps = {
   spot: Spot | null;

@@ -11,7 +11,7 @@ import {
   KOREA_MIN_ZOOM,
   USE_FRACTIONAL_ZOOM,
 } from '@/lib/map/korea-bounds';
-import type { Spot } from '@/lib/mock/spots';
+import type { Spot } from "@/lib/types/spot";
 
 const mapContainerStyle = { width: '100%', height: '100%' };
 
@@ -58,9 +58,9 @@ export default function GoogleMapComponent({
     return (
       <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
         <div className="text-center p-xl max-w-md">
-          <h2 className="text-title text-primary mb-md">Google Maps API Key 필요</h2>
+          <h2 className="text-title text-primary mb-md">Google Maps API key required</h2>
           <p className="text-body text-neutral-dusk mb-lg">
-            .env.local에 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY를 설정해주세요.
+            Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in .env.local.
           </p>
           <a
             href="https://console.cloud.google.com/google/maps-apis/credentials"

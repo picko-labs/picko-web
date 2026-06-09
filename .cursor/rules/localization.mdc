@@ -1,0 +1,47 @@
+---
+description: Picko UI copy — English, global, trend-conscious travelers (잘파 / Korea visitors 20s–30s)
+globs: "**/*.{tsx,ts}"
+alwaysApply: true
+---
+
+# Localization (UI copy)
+
+Picko is built in Korea but **targets global users**. All **product-facing text** uses **English** as the default language.
+
+## Audience (word choice & tone)
+
+| Layer | Who |
+|-------|-----|
+| **Core** | **20s–30s** traveling in **Korea** — trend-led discovery, spots worth visiting |
+| **Range** | **Teens–40s** — same voice; stay approachable, not childish or corporate |
+| **Mindset** | **잘파 (well-informed / trend-conscious)** — wants what’s hot and real; skims fast on mobile |
+
+Write like a **travel + K-culture companion**, not admin software: short, confident, friendly **you**, discovery words (**pick**, **spot**, **trending**, **near you**). Light emoji OK where the prototype uses them (e.g. 🔥). Avoid stiff formality and heavy slang.
+
+Full voice guide: `docs/LANGUAGE.md` · [language-reference.md](../skills/picko-design-system/language-reference.md)
+
+## Must be English
+
+- Button, link, heading, body, empty states, errors, toasts, placeholders
+- `aria-label`, `title`, alt text meant for users
+- OAuth / auth button labels (`lib/auth/social-providers.ts` `label` fields)
+- `app/layout.tsx` document language: `lang="en"`
+
+## Not required to translate (unless asked)
+
+- Code comments, JSDoc, commit messages
+- Internal docs (`docs/*.md`) — may stay Korean for the team; still describe UI strings as English when documenting screens
+- Mock data place names in Korea (e.g. spot names) — real content, not chrome copy
+
+## Tone (quick)
+
+- Short, scannable; one idea per line where possible
+- Sentence case on buttons: `Continue with Google`, `Sign out`
+- Prefer **pick / spot / trending** over generic SaaS terms
+- No Korean in UI unless implementing an explicit i18n locale later
+
+## When adding copy
+
+1. English only in components or shared string constants
+2. Check against audience: clear to a **Korea visitor in their 20s** in &lt;1 second
+3. Future i18n: keys under `lib/i18n/` or similar — default locale `en`, same voice rules

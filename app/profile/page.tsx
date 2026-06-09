@@ -1,25 +1,18 @@
-import Link from "next/link";
-import { routes } from "@/lib/routes";
+import { auth } from "@/auth";
+import ProfileContent from "@/components/features/profile/ProfileContent";
 
 /**
  * /profile — 프로토타입 ProfileScreen (~2663)
- * @see docs/ROUTING.md
- * @see K-SPOT Map.html — rg "function ProfileScreen"
+ * 비로그인 시 middleware → /login?redirect=/profile
+ * @see docs/ROUTING.md · docs/AUTH.md
  */
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await auth();
+
   return (
     <main className="min-h-screen bg-neutral-cream p-lg">
       <div className="max-w-lg mx-auto">
-        <Link
-          href={routes.map}
-          className="text-caption text-secondary hover:underline mb-lg inline-block"
-        >
-          ← Back to map
-        </Link>
-        <h1 className="text-title mb-md">My Profile</h1>
-        <p className="text-body text-neutral-dusk">
-          (Placeholder — implement from K-SPOT Map.html ProfileScreen)
-        </p>
+        <ProfileContent user={session?.user} />
       </div>
     </main>
   );

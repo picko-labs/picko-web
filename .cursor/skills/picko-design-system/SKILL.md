@@ -23,6 +23,14 @@ description: >-
 
 Rule `routing.mdc` defines **which files to read first** per task.
 
+## Language (UI copy)
+
+**English** is the default product language (global users). See [language-reference.md](language-reference.md) · `docs/LANGUAGE.md` · rule `localization.mdc`.
+
+- All buttons, headings, empty states, errors, and auth labels: **English**
+- Code comments / internal docs may be Korean; user-visible strings must not be
+- **Audience:** 잘파 / trend-conscious; **core** = **20s–30s visiting Korea**; breadth **teens–40s**. Voice = short, travel + discovery (**pick**, **spot**, **trending**), friendly **you**—not corporate or heavy slang
+
 ## Quick workflow
 
 1. **Route** — Page vs overlay: [routing-reference.md](routing-reference.md) · `docs/ROUTING.md`
@@ -80,6 +88,7 @@ Current: `components/GoogleMap.tsx`, `components/SearchBar.tsx`.
 
 ## Additional resources
 
+- [language-reference.md](language-reference.md) — English UI copy policy & patterns
 - [routing-reference.md](routing-reference.md) — routes, prototype screens, overlays
 - [prototype-reference.md](prototype-reference.md) — K-SPOT Map.html component map
 - [tokens-reference.md](tokens-reference.md) — design-tokens.ts quick reference

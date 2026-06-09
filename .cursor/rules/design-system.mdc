@@ -8,6 +8,8 @@ alwaysApply: false
 
 TDS 원칙 + K-Culture 브랜드. 상세 스펙: `DESIGN_SYSTEM.md` · 구현: `app/globals.css`, `tailwind.config.ts` · JS 토큰: `lib/design-tokens.ts`
 
+**UI copy:** English · young trend-conscious travelers (core: 20s–30s in Korea) — `localization.mdc` · `docs/LANGUAGE.md`
+
 ## 색상
 
 - CTA/트렌딩: `bg-primary`, `text-primary`, hover `bg-primary-dark`

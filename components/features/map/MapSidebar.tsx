@@ -1,7 +1,8 @@
 'use client';
 
-import type { Spot } from '@/lib/mock/spots';
+import type { Spot } from "@/lib/types/spot";
 import { isSidebarNavVisible, type ScopeTab, type SidebarNav } from '@/lib/routes';
+import MyTabPanel from "@/components/features/map/MyTabPanel";
 
 const SIDEBAR_NAV = [
   { id: 'info' as const, icon: '🗺️', label: 'Info' },
@@ -100,6 +101,7 @@ export default function MapSidebar({
               </div>
             </div>
           )}
+          {sidebarNav === 'my' && <MyTabPanel />}
         </div>
 
         <div className="sidebar-bottom-nav">
