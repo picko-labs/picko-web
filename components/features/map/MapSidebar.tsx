@@ -1,14 +1,17 @@
-'use client';
+"use client";
 
 import type { Spot } from "@/lib/types/spot";
-import { isSidebarNavVisible, type ScopeTab, type SidebarNav } from '@/lib/routes';
-import MyTabPanel from "@/components/features/map/MyTabPanel";
+import { isSidebarNavVisible, type ScopeTab, type SidebarNav } from "@/lib/routes";
+import { MyTabPanel } from "@/components/features/map/MyTabPanel";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+
+const t = getDictionary().map;
 
 const SIDEBAR_NAV = [
-  { id: 'info' as const, icon: '🗺️', label: 'Info' },
-  { id: 'pick' as const, icon: '⭐', label: 'Pick' },
-  { id: 'lifestyle' as const, icon: '✨', label: 'Life Style' },
-  { id: 'my' as const, icon: '👤', label: 'My' },
+  { id: "info" as const, icon: "🗺️", label: "Info" },
+  { id: "pick" as const, icon: "⭐", label: "Pick" },
+  { id: "lifestyle" as const, icon: "✨", label: "Life Style" },
+  { id: "my" as const, icon: "👤", label: "My" },
 ];
 
 type MapSidebarProps = {
@@ -21,7 +24,7 @@ type MapSidebarProps = {
   onSpotClick: (spot: Spot) => void;
 };
 
-export default function MapSidebar({
+export function MapSidebar({
   collapsed,
   scopeTab,
   onScopeTabChange,
@@ -33,38 +36,38 @@ export default function MapSidebar({
   const sorted = [...spots].sort((a, b) => b.pins - a.pins).slice(0, 4);
 
   return (
-    <div className={`sidebar-panel ${collapsed ? 'collapsed' : ''}`}>
+    <div className={`sidebar-panel ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar-inner">
         <div className="scope-tabs">
           <div className="scope-tabs-inner">
             <button
               type="button"
-              className={`scope-tab ${scopeTab === 'nearby' ? 'active' : ''}`}
-              onClick={() => onScopeTabChange('nearby')}
+              className={`scope-tab ${scopeTab === "nearby" ? "active" : ""}`}
+              onClick={() => onScopeTabChange("nearby")}
             >
-              <span>Near you</span>
+              <span>{t.nearYou}</span>
             </button>
             <button
               type="button"
-              className={`scope-tab ${scopeTab === 'nationwide' ? 'active' : ''}`}
-              onClick={() => onScopeTabChange('nationwide')}
+              className={`scope-tab ${scopeTab === "nationwide" ? "active" : ""}`}
+              onClick={() => onScopeTabChange("nationwide")}
             >
               <span>🔥</span>
-              <span>Nationwide</span>
+              <span>{t.nationwide}</span>
             </button>
           </div>
         </div>
 
         <div className="sidebar-scroll">
-          {sidebarNav === 'info' && (
+          {sidebarNav === "info" && (
             <>
               <div className="section-header">
                 <div className="section-title">
-                  {scopeTab === 'nearby' ? 'Trending nearby' : 'Trending in Korea'}
+                  {scopeTab === "nearby" ? t.trendingNearby : t.trendingInKorea}
                 </div>
                 <div className="update-indicator">
                   <span className="update-dot" />
-                  <span>Updated 20m ago</span>
+                  <span>{t.updatedRecently}</span>
                 </div>
               </div>
               <div className="ranked-grid">
@@ -73,7 +76,7 @@ export default function MapSidebar({
                     key={spot.id}
                     className="ranked-card"
                     onClick={() => onSpotClick(spot)}
-                    onKeyDown={(e) => e.key === 'Enter' && onSpotClick(spot)}
+                    onKeyDown={(e) => e.key === "Enter" && onSpotClick(spot)}
                     role="button"
                     tabIndex={0}
                   >
@@ -92,16 +95,16 @@ export default function MapSidebar({
               </div>
             </>
           )}
-          {sidebarNav === 'pick' && (
-            <div className="pick-empty" style={{ padding: '48px 24px', textAlign: 'center' }}>
+          {sidebarNav === "pick" && (
+            <div className="pick-empty" style={{ padding: "48px 24px", textAlign: "center" }}>
               <span style={{ fontSize: 48 }}>⭐</span>
-              <div style={{ fontWeight: 600, fontSize: 17, marginTop: 16 }}>No picks yet</div>
-              <div style={{ color: 'var(--text-secondary)', fontSize: 15, marginTop: 8 }}>
-                Star spots you love to save them here
+              <div style={{ fontWeight: 600, fontSize: 17, marginTop: 16 }}>{t.noPicksYet}</div>
+              <div style={{ color: "var(--text-secondary)", fontSize: 15, marginTop: 8 }}>
+                {t.noPicksYetDesc}
               </div>
             </div>
           )}
-          {sidebarNav === 'my' && <MyTabPanel />}
+          {sidebarNav === "my" && <MyTabPanel />}
         </div>
 
         <div className="sidebar-bottom-nav">
@@ -109,7 +112,7 @@ export default function MapSidebar({
             <button
               key={nav.id}
               type="button"
-              className={`sidebar-nav-item ${sidebarNav === nav.id ? 'active' : ''}`}
+              className={`sidebar-nav-item ${sidebarNav === nav.id ? "active" : ""}`}
               onClick={() => onSidebarNavChange(nav.id)}
             >
               <span className="sidebar-nav-icon">{nav.icon}</span>

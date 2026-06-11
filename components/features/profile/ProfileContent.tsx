@@ -9,7 +9,7 @@ type ProfileContentProps = {
   user: Session["user"] | undefined;
 };
 
-export default function ProfileContent({ user }: ProfileContentProps) {
+export function ProfileContent({ user }: ProfileContentProps) {
   return (
     <>
       <Link

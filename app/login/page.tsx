@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import LoginForm from "@/components/features/auth/LoginForm";
+import { LoginForm } from "@/components/features/auth/LoginForm";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 
 const t = getDictionary();

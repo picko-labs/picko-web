@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useRef } from 'react';
-import { TRENDING_CATEGORIES } from '@/lib/mock/spots';
+import { useRef } from "react";
+import { TRENDING_CATEGORIES } from "@/lib/mock/spots";
 
 type MapTopBarProps = {
   collapsed: boolean;
@@ -12,7 +12,7 @@ type MapTopBarProps = {
   onTrendingChange: (id: string) => void;
 };
 
-export default function MapTopBar({
+export function MapTopBar({
   collapsed,
   onExpand,
   searchQuery,
@@ -45,7 +45,7 @@ export default function MapTopBar({
         </button>
       )}
 
-      <div className={`top-bar-search ${collapsed ? 'collapsed' : ''}`}>
+      <div className={`top-bar-search ${collapsed ? "collapsed" : ""}`}>
         <div className="search-bar">
           <span className="search-brand">Picko</span>
           <span className="search-divider" />
@@ -67,7 +67,7 @@ export default function MapTopBar({
           <button
             key={cat.id}
             type="button"
-            className={`category-chip ${activeTrending === cat.id ? 'active' : ''}`}
+            className={`category-chip ${activeTrending === cat.id ? "active" : ""}`}
             onClick={() => onTrendingChange(cat.id)}
           >
             <span className="category-chip-icon">{cat.icon}</span>

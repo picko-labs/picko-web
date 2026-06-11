@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { useSession } from "next-auth/react";
-import SocialLoginButtons from "@/components/features/auth/SocialLoginButtons";
+import { SocialLoginButtons } from "@/components/features/auth/SocialLoginButtons";
 import { useLogoutMutation } from "@/lib/queries/auth";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { routes } from "@/lib/routes";
 
 const t = getDictionary().auth;
 
-export default function MyTabPanel() {
+export function MyTabPanel() {
   const { data: session, status } = useSession();
   const logout = useLogoutMutation();
 
