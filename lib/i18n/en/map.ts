@@ -1,5 +1,6 @@
 export const map = {
   loadingMap: "Loading map…",
+  loadMapError: "Could not load map. Please try again.",
   openPanel: "Open search and panel",
   closePanel: "Close search and panel",
   openPanelTitle: "Open search & panel",
