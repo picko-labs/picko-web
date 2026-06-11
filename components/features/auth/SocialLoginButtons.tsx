@@ -50,7 +50,7 @@ const PROVIDER_ICONS: Record<SocialProviderId, () => React.ReactNode> = {
   apple: AppleIcon,
 };
 
-export default function SocialLoginButtons({
+export function SocialLoginButtons({
   callbackUrl = "/",
   className = "",
 }: SocialLoginButtonsProps) {

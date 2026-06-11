@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import SocialLoginButtons from "@/components/features/auth/SocialLoginButtons";
+import { SocialLoginButtons } from "@/components/features/auth/SocialLoginButtons";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { routes } from "@/lib/routes";
 
 const t = getDictionary();
 
-export default function LoginForm() {
+export function LoginForm() {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect");
   const callbackUrl =

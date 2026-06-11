@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { useCallback } from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import {
   DEFAULT_MAP_CENTER,
   DEFAULT_MAP_PAN_OFFSET_PX,
@@ -10,10 +10,10 @@ import {
   KOREA_MAX_ZOOM,
   KOREA_MIN_ZOOM,
   USE_FRACTIONAL_ZOOM,
-} from '@/lib/map/korea-bounds';
+} from "@/lib/map/korea-bounds";
 import type { Spot } from "@/lib/types/spot";
 
-const mapContainerStyle = { width: '100%', height: '100%' };
+const mapContainerStyle = { width: "100%", height: "100%" };
 
 const mapOptions: google.maps.MapOptions = {
   disableDefaultUI: false,
@@ -25,8 +25,14 @@ const mapOptions: google.maps.MapOptions = {
   minZoom: KOREA_MIN_ZOOM,
   maxZoom: KOREA_MAX_ZOOM,
   isFractionalZoomEnabled: USE_FRACTIONAL_ZOOM,
-  gestureHandling: 'greedy',
-  styles: [{ featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] }],
+  gestureHandling: "greedy",
+  styles: [
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [{ visibility: "off" }],
+    },
+  ],
 };
 
 interface GoogleMapComponentProps {
@@ -36,7 +42,7 @@ interface GoogleMapComponentProps {
   onMapReady?: (map: google.maps.Map) => void;
 }
 
-export default function GoogleMapComponent({
+export function GoogleMapComponent({
   spots,
   selectedSpotId,
   onMarkerClick,
@@ -49,16 +55,18 @@ export default function GoogleMapComponent({
       map.panBy(DEFAULT_MAP_PAN_OFFSET_PX.x, DEFAULT_MAP_PAN_OFFSET_PX.y);
       onMapReady?.(map);
     },
-    [onMapReady]
+    [onMapReady],
   );
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
-  if (!apiKey || apiKey === 'YOUR_GOOGLE_MAPS_API_KEY_HERE') {
+  if (!apiKey || apiKey === "YOUR_GOOGLE_MAPS_API_KEY_HERE") {
     return (
       <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
         <div className="text-center p-xl max-w-md">
-          <h2 className="text-title text-primary mb-md">Google Maps API key required</h2>
+          <h2 className="text-title text-primary mb-md">
+            Google Maps API key required
+          </h2>
           <p className="text-body text-neutral-dusk mb-lg">
             Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in .env.local.
           </p>

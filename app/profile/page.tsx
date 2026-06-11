@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import ProfileContent from "@/components/features/profile/ProfileContent";
+import { ProfileContent } from "@/components/features/profile/ProfileContent";
 
 /**
  * /profile — 프로토타입 ProfileScreen (~2663)

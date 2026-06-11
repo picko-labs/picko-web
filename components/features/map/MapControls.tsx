@@ -1,4 +1,8 @@
-'use client';
+"use client";
+
+import { getDictionary } from "@/lib/i18n/get-dictionary";
+
+const t = getDictionary().map;
 
 type MapControlsProps = {
   sidebarCollapsed: boolean;
@@ -6,17 +10,13 @@ type MapControlsProps = {
   onZoomOut: () => void;
 };
 
-export default function MapControls({
-  sidebarCollapsed,
-  onZoomIn,
-  onZoomOut,
-}: MapControlsProps) {
+export function MapControls({ sidebarCollapsed, onZoomIn, onZoomOut }: MapControlsProps) {
   return (
-    <div className={`map-controls ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      <button type="button" className="control-btn" onClick={onZoomIn} title="Zoom In">
+    <div className={`map-controls ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
+      <button type="button" className="control-btn" onClick={onZoomIn} title={t.zoomIn}>
         ➕
       </button>
-      <button type="button" className="control-btn" onClick={onZoomOut} title="Zoom Out">
+      <button type="button" className="control-btn" onClick={onZoomOut} title={t.zoomOut}>
         ➖
       </button>
     </div>

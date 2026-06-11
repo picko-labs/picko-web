@@ -24,7 +24,7 @@ function makeQueryClient() {
   });
 }
 
-export default function QueryProvider({
+export function QueryProvider({
   children,
 }: {
   children: React.ReactNode;
