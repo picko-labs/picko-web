@@ -19,6 +19,19 @@ function isBackendAuthProvider(id: string): id is AuthProvider {
   return BACKEND_AUTH_PROVIDERS.includes(id as AuthProvider);
 }
 
+function isLocalEnvironment(): boolean {
+  const urls = [
+    process.env.AUTH_URL,
+    process.env.NEXTAUTH_URL,
+    process.env.API_BASE_URL,
+    process.env.NEXT_PUBLIC_API_BASE_URL,
+  ];
+  return urls.some(
+    (url) =>
+      url != null && /\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(url),
+  );
+}
+
 function applyBackendTokens(
   token: JWT,
   pair: { accessToken: string; refreshToken: string },
@@ -65,6 +78,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.id_token && isBackendAuthProvider(account.provider)) {
+        if (isLocalEnvironment() && account.provider === "google") {
+          console.log(
+            "[local] Google id_token (POST /auth/google body.token):",
+            account.id_token,
+          );
+        }
         const pair = await exchangeSocialToken(account.provider, account.id_token);
         return applyBackendTokens(token, pair);
       }
