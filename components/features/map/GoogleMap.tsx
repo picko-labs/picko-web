@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import {
   DEFAULT_MAP_CENTER,
   DEFAULT_MAP_PAN_OFFSET_PX,
@@ -11,7 +11,12 @@ import {
   KOREA_MIN_ZOOM,
   USE_FRACTIONAL_ZOOM,
 } from "@/lib/map/korea-bounds";
+import { getDictionary } from "@/lib/i18n/get-dictionary";
 import type { Spot } from "@/lib/types/spot";
+
+const t = getDictionary().map;
+
+const GOOGLE_MAPS_SCRIPT_ID = "picko-google-map-script";
 
 const mapContainerStyle = { width: "100%", height: "100%" };
 
@@ -42,12 +47,18 @@ interface GoogleMapComponentProps {
   onMapReady?: (map: google.maps.Map) => void;
 }
 
-export function GoogleMapComponent({
+function GoogleMapView({
+  apiKey,
   spots,
   selectedSpotId,
   onMarkerClick,
   onMapReady,
-}: GoogleMapComponentProps) {
+}: GoogleMapComponentProps & { apiKey: string }) {
+  const { isLoaded, loadError } = useJsApiLoader({
+    id: GOOGLE_MAPS_SCRIPT_ID,
+    googleMapsApiKey: apiKey,
+  });
+
   const onLoad = useCallback(
     (map: google.maps.Map) => {
       map.setCenter(DEFAULT_MAP_CENTER);
@@ -58,6 +69,43 @@ export function GoogleMapComponent({
     [onMapReady],
   );
 
+  if (loadError) {
+    return (
+      <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
+        <p className="text-body text-neutral-dusk">{t.loadMapError}</p>
+      </div>
+    );
+  }
+
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
+        <p className="text-body text-neutral-dusk">{t.loadingMap}</p>
+      </div>
+    );
+  }
+
+  return (
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      center={DEFAULT_MAP_CENTER}
+      zoom={DEFAULT_MAP_ZOOM}
+      onLoad={onLoad}
+      options={mapOptions}
+    >
+      {spots.map((spot) => (
+        <Marker
+          key={spot.id}
+          position={{ lat: spot.lat, lng: spot.lng }}
+          onClick={() => onMarkerClick(spot)}
+          opacity={selectedSpotId === spot.id ? 1 : 0.95}
+        />
+      ))}
+    </GoogleMap>
+  );
+}
+
+export function GoogleMapComponent(props: GoogleMapComponentProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   if (!apiKey || apiKey === "YOUR_GOOGLE_MAPS_API_KEY_HERE") {
@@ -83,24 +131,5 @@ export function GoogleMapComponent({
     );
   }
 
-  return (
-    <LoadScript googleMapsApiKey={apiKey}>
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        center={DEFAULT_MAP_CENTER}
-        zoom={DEFAULT_MAP_ZOOM}
-        onLoad={onLoad}
-        options={mapOptions}
-      >
-        {spots.map((spot) => (
-          <Marker
-            key={spot.id}
-            position={{ lat: spot.lat, lng: spot.lng }}
-            onClick={() => onMarkerClick(spot)}
-            opacity={selectedSpotId === spot.id ? 1 : 0.95}
-          />
-        ))}
-      </GoogleMap>
-    </LoadScript>
-  );
+  return <GoogleMapView apiKey={apiKey} {...props} />;
 }
