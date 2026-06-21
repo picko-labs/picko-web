@@ -1,20 +1,17 @@
-import { en } from "@/lib/i18n/en";
-
 /**
  * Social login provider registry.
- * UI labels and NextAuth providers share this single source.
+ * UI labels come from i18n at render time.
  */
 export type SocialProviderId = "google" | "apple";
 
 export interface SocialProviderMeta {
   id: SocialProviderId;
-  label: string;
   enabled: boolean;
 }
 
 export const SOCIAL_PROVIDER_REGISTRY: readonly SocialProviderMeta[] = [
-  { id: "google", label: en.auth.continueWithGoogle, enabled: true },
-  { id: "apple", label: en.auth.continueWithApple, enabled: false },
+  { id: "google", enabled: true },
+  { id: "apple", enabled: false },
 ] as const;
 
 export function getEnabledSocialProviders(): SocialProviderMeta[] {

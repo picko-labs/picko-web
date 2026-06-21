@@ -721,3 +721,38 @@
 .my-tab-signout:hover {
   color: var(--primary, #f04040);
 }
+
+.my-tab-settings {
+  margin-top: var(--spacing-lg, 16px);
+  padding: var(--spacing-md, 12px) var(--spacing-lg, 16px);
+  background: var(--bg-primary, #fff);
+  border-radius: var(--radius-md, 12px);
+  border: 1px solid var(--neutral-paper, #e8e6e1);
+}
+
+.language-selector-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #4a4d55);
+  margin-bottom: var(--spacing-sm, 8px);
+}
+
+.language-selector-options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs, 4px);
+}
+
+.language-selector-option {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm, 8px);
+  font-size: 15px;
+  color: var(--text-primary, #111318);
+  cursor: pointer;
+  padding: var(--spacing-xs, 4px) 0;
+}
+
+.language-selector-option input[type="radio"] {
+  accent-color: var(--primary, #f04040);
+}

@@ -11,11 +11,9 @@ import {
   KOREA_MIN_ZOOM,
   USE_FRACTIONAL_ZOOM,
 } from "@/lib/map/korea-bounds";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 import type { Spot } from "@/lib/types/spot";
 import type { ViewportBounds } from "@/lib/types/spot";
-
-const t = getDictionary().map;
 
 const GOOGLE_MAPS_SCRIPT_ID = "picko-google-map-script";
 
@@ -57,6 +55,7 @@ function GoogleMapView({
   onMapReady,
   onBoundsChanged,
 }: GoogleMapComponentProps & { apiKey: string }) {
+  const { map: mapLabels } = useDictionary();
   const mapRef = useRef<google.maps.Map | null>(null);
 
   const { isLoaded, loadError } = useJsApiLoader({
@@ -93,7 +92,7 @@ function GoogleMapView({
   if (loadError) {
     return (
       <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
-        <p className="text-body text-neutral-dusk">{t.loadMapError}</p>
+        <p className="text-body text-neutral-dusk">{mapLabels.loadMapError}</p>
       </div>
     );
   }
@@ -101,7 +100,7 @@ function GoogleMapView({
   if (!isLoaded) {
     return (
       <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
-        <p className="text-body text-neutral-dusk">{t.loadingMap}</p>
+        <p className="text-body text-neutral-dusk">{mapLabels.loadingMap}</p>
       </div>
     );
   }

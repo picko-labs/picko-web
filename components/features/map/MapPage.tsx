@@ -6,9 +6,16 @@ import { MapSidebar } from "@/components/features/map/MapSidebar";
 import { MapTopBar } from "@/components/features/map/MapTopBar";
 import { SpotDetailCard } from "@/components/features/map/SpotDetailCard";
 import { useMapPage } from "@/components/features/map/useMapPage";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 
-const t = getDictionary().map;
+function MapLoading() {
+  const { map } = useDictionary();
+  return (
+    <div className="map-view flex items-center justify-center bg-neutral-cream">
+      <p className="text-body text-neutral-dusk">{map.loadingMap}</p>
+    </div>
+  );
+}
 
 const GoogleMapComponent = dynamic(
   () =>
@@ -17,15 +24,12 @@ const GoogleMapComponent = dynamic(
     ),
   {
     ssr: false,
-    loading: () => (
-      <div className="map-view flex items-center justify-center bg-neutral-cream">
-        <p className="text-body text-neutral-dusk">{t.loadingMap}</p>
-      </div>
-    ),
+    loading: () => <MapLoading />,
   },
 );
 
 export function MapPage() {
+  const { map } = useDictionary();
   const {
     selectedSpot,
     setSelectedSpot,
@@ -73,8 +77,8 @@ export function MapPage() {
           type="button"
           className={`sidebar-toggle ${sidebarCollapsed ? "collapsed" : ""}`}
           onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-          title={sidebarCollapsed ? t.openPanelTitle : t.closePanelTitle}
-          aria-label={sidebarCollapsed ? t.openPanel : t.closePanel}
+          title={sidebarCollapsed ? map.openPanelTitle : map.closePanelTitle}
+          aria-label={sidebarCollapsed ? map.openPanel : map.closePanel}
         >
           <span className="toggle-chevron">
             {sidebarCollapsed ? (

@@ -27,6 +27,37 @@
 - 응답 타입 정의 필수 (`lib/types/`)
 - Error는 표준화된 타입 사용 (예: `AuthApiError`)
 
+## i18n (UI copy 변수명)
+
+- `useDictionary()` / `getDictionary()` 반환값에 **`t` 같은 축약 변수명 사용 금지**
+- **섹션별 destructuring** 권장 — 컴포넌트가 쓰는 도메인이 드러나게
+
+```tsx
+// ✅ Good
+const { map } = useDictionary();
+return <p>{map.loadingMap}</p>;
+
+const { auth, common } = useDictionary();
+return <span>{auth.signOut}</span>;
+
+// Server Component fallback 등 전체 참조가 필요할 때
+const dictionary = getDictionary();
+return <p>{dictionary.auth.loadingSignIn}</p>;
+
+// ❌ Bad
+const t = useDictionary();
+return <p>{t.map.loadingMap}</p>;
+```
+
+| 패턴 | 사용 시점 |
+|------|-----------|
+| `const { map } = useDictionary()` | 지도 UI 한 섹션만 |
+| `const { auth, profile } = useDictionary()` | 여러 섹션, 각각 여러 번 참조 |
+| `const dictionary = getDictionary()` | Server Component, Suspense fallback |
+| `const { map: mapLabels } = useDictionary()` | `map` 변수명과 Google Maps 인스턴스 충돌 시 alias |
+
+- 문자열 키·locale 파일 구조: `docs/LANGUAGE.md`, `lib/i18n/`
+
 ## Component
 
 - **단일 책임** — 하나의 UI 역할만

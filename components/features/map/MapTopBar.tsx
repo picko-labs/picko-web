@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { CATEGORY_CHIPS } from "@/lib/map/category-chips";
+import { useMemo, useRef } from "react";
+import { getCategoryChips } from "@/lib/map/category-chips";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 
 type MapTopBarProps = {
   collapsed: boolean;
@@ -20,6 +21,11 @@ export function MapTopBar({
   categoryCode,
   onCategoryChange,
 }: MapTopBarProps) {
+  const { map } = useDictionary();
+  const categoryChips = useMemo(
+    () => getCategoryChips(map.categories),
+    [map.categories],
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleExpand = () => {
@@ -34,8 +40,8 @@ export function MapTopBar({
           type="button"
           className="search-mini-btn"
           onClick={handleExpand}
-          title="Open search & panel"
-          aria-label="Open search and panel"
+          title={map.openPanelTitle}
+          aria-label={map.openPanel}
         >
           <span className="search-brand">Picko</span>
           <span className="search-divider" />
@@ -53,7 +59,7 @@ export function MapTopBar({
             ref={inputRef}
             type="text"
             className="search-input"
-            placeholder="Search spots, areas, hashtags"
+            placeholder={map.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             tabIndex={collapsed ? -1 : 0}
@@ -63,7 +69,7 @@ export function MapTopBar({
       </div>
 
       <div className="category-bar">
-        {CATEGORY_CHIPS.map((chip) => (
+        {categoryChips.map((chip) => (
           <button
             key={chip.id ?? "__all__"}
             type="button"

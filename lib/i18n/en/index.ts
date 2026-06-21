@@ -10,4 +10,17 @@ export const en = {
   profile,
 } as const;
 
-export type Dictionary = typeof en;
+/** Locale-agnostic dictionary shape (string values, same keys as en). */
+export type Dictionary = {
+  [Section in keyof typeof en]: {
+    [Key in keyof (typeof en)[Section]]: (typeof en)[Section][Key] extends (
+      ...args: infer A
+    ) => infer R
+      ? (...args: A) => R
+      : (typeof en)[Section][Key] extends object
+        ? {
+            [SubKey in keyof (typeof en)[Section][Key]]: string;
+          }
+        : string;
+  };
+};

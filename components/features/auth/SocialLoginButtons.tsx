@@ -1,13 +1,12 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { useDictionary } from "@/components/providers/LocaleProvider";
+import type { Dictionary } from "@/lib/i18n/en";
 import {
   getEnabledSocialProviders,
   type SocialProviderId,
 } from "@/lib/auth/social-providers";
-
-const t = getDictionary().auth;
 
 type SocialLoginButtonsProps = {
   callbackUrl?: string;
@@ -50,16 +49,25 @@ const PROVIDER_ICONS: Record<SocialProviderId, () => React.ReactNode> = {
   apple: AppleIcon,
 };
 
+const PROVIDER_LABELS: Record<
+  SocialProviderId,
+  (auth: Dictionary["auth"]) => string
+> = {
+  google: (auth) => auth.continueWithGoogle,
+  apple: (auth) => auth.continueWithApple,
+};
+
 export function SocialLoginButtons({
   callbackUrl = "/",
   className = "",
 }: SocialLoginButtonsProps) {
+  const { auth } = useDictionary();
   const providers = getEnabledSocialProviders();
 
   if (providers.length === 0) {
     return (
       <p className="text-caption text-neutral-dusk text-center">
-        {t.signInUnavailable}
+        {auth.signInUnavailable}
       </p>
     );
   }
@@ -76,7 +84,7 @@ export function SocialLoginButtons({
             onClick={() => signIn(provider.id, { callbackUrl })}
           >
             <Icon />
-            <span>{provider.label}</span>
+            <span>{PROVIDER_LABELS[provider.id](auth)}</span>
           </button>
         );
       })}
