@@ -21,8 +21,16 @@ type MapSidebarProps = {
   sidebarNav: SidebarNav;
   onSidebarNavChange: (nav: SidebarNav) => void;
   spots: Spot[];
+  isLoading: boolean;
   onSpotClick: (spot: Spot) => void;
 };
+
+function spotImageStyle(imageUrl: string | null): React.CSSProperties {
+  if (imageUrl) {
+    return { backgroundImage: `url(${imageUrl})`, backgroundSize: "cover", backgroundPosition: "center" };
+  }
+  return { background: "linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%)" };
+}
 
 export function MapSidebar({
   collapsed,
@@ -31,9 +39,10 @@ export function MapSidebar({
   sidebarNav,
   onSidebarNavChange,
   spots,
+  isLoading,
   onSpotClick,
 }: MapSidebarProps) {
-  const sorted = [...spots].sort((a, b) => b.pins - a.pins).slice(0, 4);
+  const sorted = [...spots].sort((a, b) => b.pinCount - a.pinCount).slice(0, 4);
 
   return (
     <div className={`sidebar-panel ${collapsed ? "collapsed" : ""}`}>
@@ -70,29 +79,39 @@ export function MapSidebar({
                   <span>{t.updatedRecently}</span>
                 </div>
               </div>
-              <div className="ranked-grid">
-                {sorted.map((spot, idx) => (
-                  <div
-                    key={spot.id}
-                    className="ranked-card"
-                    onClick={() => onSpotClick(spot)}
-                    onKeyDown={(e) => e.key === "Enter" && onSpotClick(spot)}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="ranked-card-img" style={{ background: spot.image }} />
-                    <div className="ranked-card-overlay" />
-                    <div className="ranked-card-number">{idx + 1}</div>
-                    <div className="ranked-card-hashtag">#{spot.category}</div>
-                    <div className="ranked-card-footer">
-                      <div className="ranked-card-name">{spot.name}</div>
-                      <div className="ranked-card-distance">
-                        {(0.2 + idx * 0.8).toFixed(1)}km · {spot.location}
+              {isLoading ? (
+                <div className="ranked-grid">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} className="ranked-card ranked-card--skeleton" />
+                  ))}
+                </div>
+              ) : (
+                <div className="ranked-grid">
+                  {sorted.map((spot, idx) => (
+                    <div
+                      key={spot.id}
+                      className="ranked-card"
+                      onClick={() => onSpotClick(spot)}
+                      onKeyDown={(e) => e.key === "Enter" && onSpotClick(spot)}
+                      role="button"
+                      tabIndex={0}
+                    >
+                      <div className="ranked-card-img" style={spotImageStyle(spot.imageUrl)} />
+                      <div className="ranked-card-overlay" />
+                      <div className="ranked-card-number">{idx + 1}</div>
+                      <div className="ranked-card-hashtag">
+                        #{spot.categories[0]?.name ?? ""}
+                      </div>
+                      <div className="ranked-card-footer">
+                        <div className="ranked-card-name">{spot.name}</div>
+                        <div className="ranked-card-distance">
+                          {t.pinsCount(spot.pinCount)}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </>
           )}
           {sidebarNav === "pick" && (

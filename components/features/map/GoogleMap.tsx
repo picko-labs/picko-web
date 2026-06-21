@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import {
   DEFAULT_MAP_CENTER,
@@ -13,6 +13,7 @@ import {
 } from "@/lib/map/korea-bounds";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import type { Spot } from "@/lib/types/spot";
+import type { ViewportBounds } from "@/lib/types/spot";
 
 const t = getDictionary().map;
 
@@ -45,6 +46,7 @@ interface GoogleMapComponentProps {
   selectedSpotId: number | null;
   onMarkerClick: (spot: Spot) => void;
   onMapReady?: (map: google.maps.Map) => void;
+  onBoundsChanged?: (bounds: ViewportBounds) => void;
 }
 
 function GoogleMapView({
@@ -53,7 +55,10 @@ function GoogleMapView({
   selectedSpotId,
   onMarkerClick,
   onMapReady,
+  onBoundsChanged,
 }: GoogleMapComponentProps & { apiKey: string }) {
+  const mapRef = useRef<google.maps.Map | null>(null);
+
   const { isLoaded, loadError } = useJsApiLoader({
     id: GOOGLE_MAPS_SCRIPT_ID,
     googleMapsApiKey: apiKey,
@@ -61,6 +66,7 @@ function GoogleMapView({
 
   const onLoad = useCallback(
     (map: google.maps.Map) => {
+      mapRef.current = map;
       map.setCenter(DEFAULT_MAP_CENTER);
       map.setZoom(DEFAULT_MAP_ZOOM);
       map.panBy(DEFAULT_MAP_PAN_OFFSET_PX.x, DEFAULT_MAP_PAN_OFFSET_PX.y);
@@ -68,6 +74,21 @@ function GoogleMapView({
     },
     [onMapReady],
   );
+
+  const onIdle = useCallback(() => {
+    const map = mapRef.current;
+    if (!map || !onBoundsChanged) return;
+    const b = map.getBounds();
+    if (!b) return;
+    const sw = b.getSouthWest();
+    const ne = b.getNorthEast();
+    onBoundsChanged({
+      swLat: sw.lat(),
+      swLng: sw.lng(),
+      neLat: ne.lat(),
+      neLng: ne.lng(),
+    });
+  }, [onBoundsChanged]);
 
   if (loadError) {
     return (
@@ -91,6 +112,7 @@ function GoogleMapView({
       center={DEFAULT_MAP_CENTER}
       zoom={DEFAULT_MAP_ZOOM}
       onLoad={onLoad}
+      onIdle={onIdle}
       options={mapOptions}
     >
       {spots.map((spot) => (

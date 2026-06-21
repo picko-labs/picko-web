@@ -1,15 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import { TRENDING_CATEGORIES } from "@/lib/mock/spots";
+import { CATEGORY_CHIPS } from "@/lib/map/category-chips";
 
 type MapTopBarProps = {
   collapsed: boolean;
   onExpand: () => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
-  activeTrending: string;
-  onTrendingChange: (id: string) => void;
+  categoryCode: string | null;
+  onCategoryChange: (code: string | null) => void;
 };
 
 export function MapTopBar({
@@ -17,8 +17,8 @@ export function MapTopBar({
   onExpand,
   searchQuery,
   onSearchChange,
-  activeTrending,
-  onTrendingChange,
+  categoryCode,
+  onCategoryChange,
 }: MapTopBarProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -63,15 +63,15 @@ export function MapTopBar({
       </div>
 
       <div className="category-bar">
-        {TRENDING_CATEGORIES.map((cat) => (
+        {CATEGORY_CHIPS.map((chip) => (
           <button
-            key={cat.id}
+            key={chip.id ?? "__all__"}
             type="button"
-            className={`category-chip ${activeTrending === cat.id ? "active" : ""}`}
-            onClick={() => onTrendingChange(cat.id)}
+            className={`category-chip ${categoryCode === chip.id ? "active" : ""}`}
+            onClick={() => onCategoryChange(chip.id)}
           >
-            <span className="category-chip-icon">{cat.icon}</span>
-            <span>{cat.label}</span>
+            <span className="category-chip-icon">{chip.icon}</span>
+            <span>{chip.label}</span>
           </button>
         ))}
       </div>

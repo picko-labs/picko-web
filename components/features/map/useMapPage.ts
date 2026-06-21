@@ -2,32 +2,42 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { getNextZoomIn, getNextZoomOut } from "@/lib/map/korea-bounds";
-import { MOCK_SPOTS } from "@/lib/mock/spots";
+import { useSpotsQuery } from "@/lib/queries/spots";
 import type { ScopeTab, SidebarNav } from "@/lib/routes";
-import type { Spot } from "@/lib/types/spot";
+import { toSpot, type Spot, type ViewportBounds } from "@/lib/types/spot";
 
 export function useMapPage() {
   const mapRef = useRef<google.maps.Map | null>(null);
-  const [spots] = useState(MOCK_SPOTS);
+  const [viewport, setViewport] = useState<ViewportBounds | null>(null);
   const [selectedSpot, setSelectedSpot] = useState<Spot | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [scopeTab, setScopeTab] = useState<ScopeTab>("nearby");
   const [sidebarNav, setSidebarNav] = useState<SidebarNav>("info");
-  const [activeTrending, setActiveTrending] = useState("hot");
+  const [categoryCode, setCategoryCode] = useState<string | null>(null);
 
-  const filteredSpots = useMemo(() => {
+  const { data: spotItems = [], isLoading: isSpotsLoading } = useSpotsQuery(
+    viewport,
+    { categoryCode },
+  );
+
+  const filteredSpots: Spot[] = useMemo(() => {
+    const mapped = spotItems.map(toSpot);
+    if (!searchQuery) return mapped;
     const q = searchQuery.toLowerCase();
-    return spots.filter(
+    return mapped.filter(
       (s) =>
         s.name.toLowerCase().includes(q) ||
-        s.location.toLowerCase().includes(q) ||
-        s.category.toLowerCase().includes(q),
+        s.categories.some((c) => c.name.toLowerCase().includes(q)),
     );
-  }, [spots, searchQuery]);
+  }, [spotItems, searchQuery]);
 
   const handleMapReady = useCallback((map: google.maps.Map) => {
     mapRef.current = map;
+  }, []);
+
+  const handleBoundsChanged = useCallback((bounds: ViewportBounds) => {
+    setViewport(bounds);
   }, []);
 
   const handleZoomIn = useCallback(() => {
@@ -51,10 +61,12 @@ export function useMapPage() {
     setScopeTab,
     sidebarNav,
     setSidebarNav,
-    activeTrending,
-    setActiveTrending,
+    categoryCode,
+    setCategoryCode,
     filteredSpots,
+    isSpotsLoading,
     handleMapReady,
+    handleBoundsChanged,
     handleZoomIn,
     handleZoomOut,
   };
