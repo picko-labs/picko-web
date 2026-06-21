@@ -8,7 +8,7 @@ import {
 import {
   ACCESS_TOKEN_REFRESH_BUFFER_MS,
   getJwtExpiryMs,
-} from "@/lib/api/jwt";
+} from "@/lib/api/common/jwt";
 import { buildAuthProviders } from "@/lib/auth/build-providers";
 import { routes } from "@/lib/routes";
 import type { AuthProvider } from "@/lib/types/auth";
@@ -27,8 +27,7 @@ function isLocalEnvironment(): boolean {
     process.env.NEXT_PUBLIC_API_BASE_URL,
   ];
   return urls.some(
-    (url) =>
-      url != null && /\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(url),
+    (url) => url != null && /\/\/(localhost|127\.0\.0\.1)(:|\/|$)/.test(url),
   );
 }
 
@@ -84,7 +83,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             account.id_token,
           );
         }
-        const pair = await exchangeSocialToken(account.provider, account.id_token);
+        const pair = await exchangeSocialToken(
+          account.provider,
+          account.id_token,
+        );
         return applyBackendTokens(token, pair);
       }
 

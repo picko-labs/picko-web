@@ -37,10 +37,12 @@ export function MapPage() {
     setScopeTab,
     sidebarNav,
     setSidebarNav,
-    activeTrending,
-    setActiveTrending,
+    categoryCode,
+    setCategoryCode,
     filteredSpots,
+    isSpotsLoading,
     handleMapReady,
+    handleBoundsChanged,
     handleZoomIn,
     handleZoomOut,
   } = useMapPage();
@@ -53,6 +55,7 @@ export function MapPage() {
           selectedSpotId={selectedSpot?.id ?? null}
           onMarkerClick={setSelectedSpot}
           onMapReady={handleMapReady}
+          onBoundsChanged={handleBoundsChanged}
         />
 
         <MapSidebar
@@ -62,6 +65,7 @@ export function MapPage() {
           sidebarNav={sidebarNav}
           onSidebarNavChange={setSidebarNav}
           spots={filteredSpots}
+          isLoading={isSpotsLoading}
           onSpotClick={setSelectedSpot}
         />
 
@@ -104,8 +108,8 @@ export function MapPage() {
           onExpand={() => setSidebarCollapsed(false)}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
-          activeTrending={activeTrending}
-          onTrendingChange={setActiveTrending}
+          categoryCode={categoryCode}
+          onCategoryChange={setCategoryCode}
         />
 
         <MapControls
