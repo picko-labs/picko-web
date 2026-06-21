@@ -6,9 +6,13 @@
 
 ```bash
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_key
+NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID=your_map_id
 ```
 
-[Google Cloud Console](https://console.cloud.google.com/google/maps-apis/credentials)에서 키 발급 후 **Maps JavaScript API** 활성화.
+- API Key: [Google Cloud Console](https://console.cloud.google.com/google/maps-apis/credentials)에서 발급 후 **Maps JavaScript API** 활성화.
+- Map ID: [Map Management](https://console.cloud.google.com/google/maps-apis/studio/maps)에서 JavaScript용 Map ID 생성 후 Cloud Map Style 연결.
+
+지도 스타일은 Cloud Console Map Style에서 관리합니다. `mapId` 사용 시 코드의 `styles` JSON은 설정하지 않습니다(상호 배타).
 
 ## 구현
 
