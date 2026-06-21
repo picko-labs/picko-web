@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/features/auth/LoginForm";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 
-const t = getDictionary();
+const dictionary = getDictionary();
 
 /**
  * /login — 프로토타입 LoginScreen (~2551)
@@ -15,7 +15,7 @@ export default function LoginPage() {
         <Suspense
           fallback={
             <p className="text-body text-neutral-dusk text-center">
-              {t.auth.loadingSignIn}
+              {dictionary.auth.loadingSignIn}
             </p>
           }
         >

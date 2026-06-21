@@ -23,6 +23,7 @@ export function useMapPage() {
 
   const filteredSpots: Spot[] = useMemo(() => {
     const mapped = spotItems.map(toSpot);
+
     if (!searchQuery) return mapped;
     const q = searchQuery.toLowerCase();
     return mapped.filter(

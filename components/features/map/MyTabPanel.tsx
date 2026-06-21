@@ -3,20 +3,20 @@
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { SocialLoginButtons } from "@/components/features/auth/SocialLoginButtons";
+import { LanguageSelector } from "@/components/features/profile/LanguageSelector";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 import { useLogoutMutation } from "@/lib/queries/auth";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { routes } from "@/lib/routes";
 
-const t = getDictionary().auth;
-
 export function MyTabPanel() {
+  const { auth, common } = useDictionary();
   const { data: session, status } = useSession();
   const logout = useLogoutMutation();
 
   if (status === "loading") {
     return (
       <div className="my-tab-panel">
-        <p className="my-tab-muted">{t.loadingAccount}</p>
+        <p className="my-tab-muted">{auth.loadingAccount}</p>
       </div>
     );
   }
@@ -27,16 +27,19 @@ export function MyTabPanel() {
         <span className="my-tab-emoji" aria-hidden>
           👤
         </span>
-        <h2 className="my-tab-title">{t.saveYourPicks}</h2>
-        <p className="my-tab-desc">{t.saveYourPicksDesc}</p>
+        <h2 className="my-tab-title">{auth.saveYourPicks}</h2>
+        <p className="my-tab-desc">{auth.saveYourPicksDesc}</p>
         <SocialLoginButtons callbackUrl="/" className="my-tab-login" />
-        <p className="my-tab-footnote">{t.appleComingSoon}</p>
+        <p className="my-tab-footnote">{auth.appleComingSoon}</p>
+        <div className="my-tab-settings">
+          <LanguageSelector />
+        </div>
       </div>
     );
   }
 
   const { user } = session;
-  const displayName = user.name ?? user.email ?? getDictionary().common.member;
+  const displayName = user.name ?? user.email ?? common.member;
 
   return (
     <div className="my-tab-panel my-tab-panel--member">
@@ -61,11 +64,15 @@ export function MyTabPanel() {
         </div>
       </div>
 
-      <nav className="my-tab-menu" aria-label={t.accountMenu}>
+      <nav className="my-tab-menu" aria-label={auth.accountMenu}>
         <Link href={routes.profile} className="my-tab-menu-item">
-          {t.myProfileAndSpots}
+          {auth.myProfileAndSpots}
         </Link>
       </nav>
+
+      <div className="my-tab-settings">
+        <LanguageSelector />
+      </div>
 
       <button
         type="button"
@@ -73,7 +80,7 @@ export function MyTabPanel() {
         disabled={logout.isPending}
         onClick={() => logout.mutate()}
       >
-        {logout.isPending ? t.signingOut : t.signOut}
+        {logout.isPending ? auth.signingOut : auth.signOut}
       </button>
     </div>
   );

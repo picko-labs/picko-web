@@ -3,15 +3,13 @@
 import type { Spot } from "@/lib/types/spot";
 import { isSidebarNavVisible, type ScopeTab, type SidebarNav } from "@/lib/routes";
 import { MyTabPanel } from "@/components/features/map/MyTabPanel";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 
-const t = getDictionary().map;
-
-const SIDEBAR_NAV = [
-  { id: "info" as const, icon: "🗺️", label: "Info" },
-  { id: "pick" as const, icon: "⭐", label: "Pick" },
-  { id: "lifestyle" as const, icon: "✨", label: "Life Style" },
-  { id: "my" as const, icon: "👤", label: "My" },
+const SIDEBAR_NAV_IDS = [
+  { id: "info" as const, icon: "🗺️", labelKey: "sidebarInfo" as const },
+  { id: "pick" as const, icon: "⭐", labelKey: "sidebarPick" as const },
+  { id: "lifestyle" as const, icon: "✨", labelKey: "sidebarLifestyle" as const },
+  { id: "my" as const, icon: "👤", labelKey: "sidebarMy" as const },
 ];
 
 type MapSidebarProps = {
@@ -42,6 +40,7 @@ export function MapSidebar({
   isLoading,
   onSpotClick,
 }: MapSidebarProps) {
+  const { map } = useDictionary();
   const sorted = [...spots].sort((a, b) => b.pinCount - a.pinCount).slice(0, 4);
 
   return (
@@ -54,7 +53,7 @@ export function MapSidebar({
               className={`scope-tab ${scopeTab === "nearby" ? "active" : ""}`}
               onClick={() => onScopeTabChange("nearby")}
             >
-              <span>{t.nearYou}</span>
+              <span>{map.nearYou}</span>
             </button>
             <button
               type="button"
@@ -62,7 +61,7 @@ export function MapSidebar({
               onClick={() => onScopeTabChange("nationwide")}
             >
               <span>🔥</span>
-              <span>{t.nationwide}</span>
+              <span>{map.nationwide}</span>
             </button>
           </div>
         </div>
@@ -72,11 +71,11 @@ export function MapSidebar({
             <>
               <div className="section-header">
                 <div className="section-title">
-                  {scopeTab === "nearby" ? t.trendingNearby : t.trendingInKorea}
+                  {scopeTab === "nearby" ? map.trendingNearby : map.trendingInKorea}
                 </div>
                 <div className="update-indicator">
                   <span className="update-dot" />
-                  <span>{t.updatedRecently}</span>
+                  <span>{map.updatedRecently}</span>
                 </div>
               </div>
               {isLoading ? (
@@ -105,7 +104,7 @@ export function MapSidebar({
                       <div className="ranked-card-footer">
                         <div className="ranked-card-name">{spot.name}</div>
                         <div className="ranked-card-distance">
-                          {t.pinsCount(spot.pinCount)}
+                          {map.pinsCount(spot.pinCount)}
                         </div>
                       </div>
                     </div>
@@ -117,9 +116,9 @@ export function MapSidebar({
           {sidebarNav === "pick" && (
             <div className="pick-empty" style={{ padding: "48px 24px", textAlign: "center" }}>
               <span style={{ fontSize: 48 }}>⭐</span>
-              <div style={{ fontWeight: 600, fontSize: 17, marginTop: 16 }}>{t.noPicksYet}</div>
+              <div style={{ fontWeight: 600, fontSize: 17, marginTop: 16 }}>{map.noPicksYet}</div>
               <div style={{ color: "var(--text-secondary)", fontSize: 15, marginTop: 8 }}>
-                {t.noPicksYetDesc}
+                {map.noPicksYetDesc}
               </div>
             </div>
           )}
@@ -127,7 +126,7 @@ export function MapSidebar({
         </div>
 
         <div className="sidebar-bottom-nav">
-          {SIDEBAR_NAV.filter((nav) => isSidebarNavVisible(nav.id)).map((nav) => (
+          {SIDEBAR_NAV_IDS.filter((nav) => isSidebarNavVisible(nav.id)).map((nav) => (
             <button
               key={nav.id}
               type="button"
@@ -135,7 +134,7 @@ export function MapSidebar({
               onClick={() => onSidebarNavChange(nav.id)}
             >
               <span className="sidebar-nav-icon">{nav.icon}</span>
-              <span className="sidebar-nav-label">{nav.label}</span>
+              <span className="sidebar-nav-label">{map[nav.labelKey]}</span>
             </button>
           ))}
         </div>

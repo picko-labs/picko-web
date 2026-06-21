@@ -1,10 +1,8 @@
 "use client";
 
 import { useSpotDetailQuery } from "@/lib/queries/spots";
-import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { useDictionary } from "@/components/providers/LocaleProvider";
 import type { Spot } from "@/lib/types/spot";
-
-const t = getDictionary().map;
 
 type SpotDetailCardProps = {
   spot: Spot | null;
@@ -23,6 +21,7 @@ function spotImageStyle(imageUrl: string | null): React.CSSProperties {
 }
 
 export function SpotDetailCard({ spot, onClose }: SpotDetailCardProps) {
+  const { map } = useDictionary();
   const { data: detail, isLoading: isDetailLoading } = useSpotDetailQuery(
     spot?.id ?? null,
   );
@@ -72,7 +71,7 @@ export function SpotDetailCard({ spot, onClose }: SpotDetailCardProps) {
                 )}
               </>
             )}
-            <p style={{ fontSize: 13, marginTop: 8 }}>{t.pinsCount(spot.pinCount)}</p>
+            <p style={{ fontSize: 13, marginTop: 8 }}>{map.pinsCount(spot.pinCount)}</p>
           </div>
         </>
       )}
