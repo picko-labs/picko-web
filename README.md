@@ -38,6 +38,7 @@ npm install
 
 ```bash
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_api_key_here
+NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID=your_map_id_here
 ```
 
 ### 4. 개발 서버 실행
@@ -137,6 +138,7 @@ npm run lint     # ESLint 실행
 | 변수 | 설명 | 필수 |
 |------|------|------|
 | `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` | Google Maps JavaScript API 키 | ✅ |
+| `NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID` | Cloud Map Style 연동 Map ID | ✅ |
 
 ## 📚 참고 문서
 

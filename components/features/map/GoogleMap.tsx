@@ -19,25 +19,32 @@ const GOOGLE_MAPS_SCRIPT_ID = "picko-google-map-script";
 
 const mapContainerStyle = { width: "100%", height: "100%" };
 
-const mapOptions: google.maps.MapOptions = {
-  disableDefaultUI: false,
-  zoomControl: false,
-  mapTypeControl: false,
-  streetViewControl: false,
-  fullscreenControl: false,
-  restriction: KOREA_MAP_RESTRICTION,
-  minZoom: KOREA_MIN_ZOOM,
-  maxZoom: KOREA_MAX_ZOOM,
-  isFractionalZoomEnabled: USE_FRACTIONAL_ZOOM,
-  gestureHandling: "greedy",
-  styles: [
-    {
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [{ visibility: "off" }],
-    },
-  ],
-};
+function buildMapOptions(mapId: string): google.maps.MapOptions {
+  return {
+    // Cloud Console Map Style 연동 — styles JSON과 동시 사용 불가
+    mapId,
+    // 기본 UI(줌·맵타입 등) 일괄 비활성화 여부 — false면 아래 개별 옵션으로 세부 제어
+    disableDefaultUI: false,
+    // +/- 줌 버튼 — MapTopBar 커스텀 컨트롤 사용
+    zoomControl: false,
+    // 위성/지도 등 맵 타입 전환 버튼
+    mapTypeControl: false,
+    // Street View 페그맨
+    streetViewControl: false,
+    // 전체화면 버튼
+    fullscreenControl: false,
+    // 한국 bounds 밖 패닝·과도한 줌아웃 방지 (lib/map/korea-bounds.ts)
+    restriction: KOREA_MAP_RESTRICTION,
+    // 최소 줌 (4 — 전국 넓게 보기)
+    minZoom: KOREA_MIN_ZOOM,
+    // 최대 줌 (21)
+    maxZoom: KOREA_MAX_ZOOM,
+    // 소수 줌 단계 허용 여부 — false면 정수 줌만 (네이버 이산 줌과 유사)
+    isFractionalZoomEnabled: USE_FRACTIONAL_ZOOM,
+    // 지도 위 스크롤·드래그가 페이지 스크롤보다 우선
+    gestureHandling: "greedy",
+  };
+}
 
 interface GoogleMapComponentProps {
   spots: Spot[];
@@ -49,12 +56,13 @@ interface GoogleMapComponentProps {
 
 function GoogleMapView({
   apiKey,
+  mapId,
   spots,
   selectedSpotId,
   onMarkerClick,
   onMapReady,
   onBoundsChanged,
-}: GoogleMapComponentProps & { apiKey: string }) {
+}: GoogleMapComponentProps & { apiKey: string; mapId: string }) {
   const { map: mapLabels } = useDictionary();
   const mapRef = useRef<google.maps.Map | null>(null);
 
@@ -112,7 +120,7 @@ function GoogleMapView({
       zoom={DEFAULT_MAP_ZOOM}
       onLoad={onLoad}
       onIdle={onIdle}
-      options={mapOptions}
+      options={buildMapOptions(mapId)}
     >
       {spots.map((spot) => (
         <Marker
@@ -126,31 +134,56 @@ function GoogleMapView({
   );
 }
 
+function MapConfigPlaceholder({
+  title,
+  description,
+  href,
+}: {
+  title: string;
+  description: string;
+  href: string;
+}) {
+  return (
+    <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
+      <div className="text-center p-xl max-w-md">
+        <h2 className="text-title text-primary mb-md">{title}</h2>
+        <p className="text-body text-neutral-dusk mb-lg">{description}</p>
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-caption text-secondary underline"
+        >
+          Google Cloud Console →
+        </a>
+      </div>
+    </div>
+  );
+}
+
 export function GoogleMapComponent(props: GoogleMapComponentProps) {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+  const mapId = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID;
 
   if (!apiKey || apiKey === "YOUR_GOOGLE_MAPS_API_KEY_HERE") {
     return (
-      <div className="flex items-center justify-center w-full h-full bg-neutral-cream">
-        <div className="text-center p-xl max-w-md">
-          <h2 className="text-title text-primary mb-md">
-            Google Maps API key required
-          </h2>
-          <p className="text-body text-neutral-dusk mb-lg">
-            Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in .env.local.
-          </p>
-          <a
-            href="https://console.cloud.google.com/google/maps-apis/credentials"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-caption text-secondary underline"
-          >
-            Google Cloud Console →
-          </a>
-        </div>
-      </div>
+      <MapConfigPlaceholder
+        title="Google Maps API key required"
+        description="Set NEXT_PUBLIC_GOOGLE_MAPS_API_KEY in .env.local."
+        href="https://console.cloud.google.com/google/maps-apis/credentials"
+      />
     );
   }
 
-  return <GoogleMapView apiKey={apiKey} {...props} />;
+  if (!mapId) {
+    return (
+      <MapConfigPlaceholder
+        title="Google Maps Map ID required"
+        description="Set NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID in .env.local."
+        href="https://console.cloud.google.com/google/maps-apis/studio/maps"
+      />
+    );
+  }
+
+  return <GoogleMapView apiKey={apiKey} mapId={mapId} {...props} />;
 }
